@@ -72,25 +72,26 @@ public class DungeonCrawler {
         System.out.printf("Generated %s%n%n", this.dungeon.toString());
         System.out.println("You wake up. It being dark and unsure of your whereabouts, you scramble and quickly grab what you find...");
         // Give three random [POOR] armor items
-        Item itemA = this.dungeon.generateRandomDungeonArmor();
-        Item itemB = this.dungeon.generateRandomDungeonArmor();
-        Item itemC = this.dungeon.generateRandomDungeonArmor();
+        Armor itemA = this.dungeon.generateRandomDungeonArmor();
+        Armor itemB = this.dungeon.generateRandomDungeonArmor();
+        Armor itemC = this.dungeon.generateRandomDungeonArmor();
         this.player.addItemToInventory(itemA);
         this.player.addItemToInventory(itemB);
         this.player.addItemToInventory(itemC);
+
         // Give player one random [POOR] weapon
-        Item weapon = this.dungeon.generateRandomDungeonWeapon();
+        Weapon weapon = this.dungeon.generateRandomDungeonWeapon();
         this.player.addItemToInventory(weapon);
 
-        System.out.println("\nInventory:");
+        System.out.printf("%nInventory (%d):%n", this.player.getInventory().size());
         this.player.showInventory();
 
-        System.out.println("Trying to equip: " + itemA.toStringShort());
-        this.player.equipArmor((Armor) itemA);
+        System.out.println("\nTrying to equip: " + itemA.toStringShort());
+        this.player.equipArmor(itemA);
         System.out.println("Trying to equip: " + itemB.toStringShort());
-        this.player.equipArmor((Armor) itemB);
+        this.player.equipArmor(itemB);
         System.out.println("Trying to equip: " + itemC.toStringShort());
-        this.player.equipArmor((Armor) itemC);
+        this.player.equipArmor(itemC);
 
         System.out.println("\nInventory after equipping:");
         this.player.showInventory();
@@ -114,8 +115,6 @@ public class DungeonCrawler {
         //      4b. Pray
 
 
-//        while (!gameOver) {
-//
-//        }
+        // while (!gameOver) {}
     }
 }
