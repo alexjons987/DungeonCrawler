@@ -26,6 +26,7 @@ public class Player {
     // Altars
     // Active buffs
 
+    // Constructors
     public Player() {
         this.stats = new Stats();
         this.health = this.stats.getMaxHP();
@@ -47,6 +48,7 @@ public class Player {
         this.equippedOffHand = null;
     }
 
+    // Getters / Setters
     public Stats getStats() {
         return this.stats;
     }
@@ -55,14 +57,25 @@ public class Player {
         return this.health;
     }
 
+    public ArrayList<Item> getInventory() {
+        return this.inventory;
+    }
+
     public float getHealthPercentage() {
         return (float) this.health / this.stats.getMaxHP();
     }
 
+    // Funcs
     public boolean equipArmor(Armor armor) {
+        // TODO: Add base fun, add equip region checks
         return true;
     }
 
+    public void addItemToInventory(Item item) {
+        System.out.printf("Added %s to inventory.", item.toStringShort());
+    }
+
+    // To String
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format(
@@ -90,12 +103,13 @@ public class Player {
         return sb.toString();
     }
 
-    // Ability
-    // Second Wind (Campfire to refresh) - When your health drops below 30%, gain +40% lifesteal for your 12 next attacks.
+    // TODO: Make stats (will/knowledge) increase/decrease effectiveness of abilities/perks
+    // TODO: Abilites
+    // Blood Exchange (Campfire to refresh) - When your health drops below 30%, gain +40% lifesteal for your 12 next attacks.
     // War Cry (Campfire to refresh) - When your health drops below 50%, gain +25% max health bonus for the rest of the combat encounter (current health scales accordingly).
     // Divine Protection (Pray to refresh) - At the start of the combat encounter, receive the blessing of the divine and gain +30% physical damage reduction for the 6 next incoming attacks.
 
-    // Perks
+    // TODO: Add perks
     // Adrenaline Spike - When your health goes below 40%, gain +15% action speed for your 12 next attacks.
     // Combo Attack - For every other attack, gain +10% damage bonus.
     // Defense Master - Gain an additional +10% armor from equipped armor.
