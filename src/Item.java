@@ -64,5 +64,7 @@ public abstract class Item {
         this.rarity = rarity;
     }
 
+    public abstract String toStringShort();
+
     public abstract String toString();
 }

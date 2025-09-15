@@ -56,6 +56,16 @@ public class Armor extends Item {
         this.stats = new Stats(strength, vigor, agility, dexterity, will, knowledge, resourcefulness);
     }
 
+    public String toStringShort() {
+        return String.format(
+                "[%s] %s (%s - %s)",
+                this.getRarity(),
+                this.getName(),
+                this.armorType.getDisplayName(),
+                this.armorEquipRegion.getDisplayName()
+        );
+    }
+
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(

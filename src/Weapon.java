@@ -69,6 +69,16 @@ public class Weapon extends Item {
         }
     }
 
+    public String toStringShort() {
+        return String.format(
+                "[%s] %s (%s) (%s)",
+                this.getRarity(),
+                this.getName(),
+                this.weaponType,
+                this.getHandTypeString()
+        );
+    }
+
     public String toString() {
         return String.format(
                 "[%s] %s (%s) (%s) - %d+%d (%.3f)",
