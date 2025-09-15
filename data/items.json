@@ -1,0 +1,198 @@
+{
+  "weapons": [
+    {
+      "name": "Longsword",
+      "rarity": "POOR",
+      "weaponType": "SWORD",
+      "handType": "TWO_HANDED",
+      "basePhysWeaponDmg": 38,
+      "baseMagWeaponDmg": 0
+    },
+    {
+      "name": "Crystal Sword",
+      "rarity": "POOR",
+      "weaponType": "SWORD",
+      "handType": "TWO_HANDED",
+      "basePhysWeaponDmg": 13,
+      "baseMagWeaponDmg": 14
+    },
+    {
+      "name": "Rapier",
+      "rarity": "POOR",
+      "weaponType": "SWORD",
+      "handType": "MAIN_HAND",
+      "basePhysWeaponDmg": 20,
+      "baseMagWeaponDmg": 0
+    },
+    {
+      "name": "Arming Sword",
+      "rarity": "POOR",
+      "weaponType": "SWORD",
+      "handType": "MAIN_HAND",
+      "basePhysWeaponDmg": 27,
+      "baseMagWeaponDmg": 0
+    },
+    {
+      "name": "Short Sword",
+      "rarity": "POOR",
+      "weaponType": "SWORD",
+      "handType": "OFF_HAND",
+      "basePhysWeaponDmg": 23,
+      "baseMagWeaponDmg": 0
+    },
+    {
+      "name": "Double Axe",
+      "rarity": "POOR",
+      "weaponType": "AXE",
+      "handType": "TWO_HANDED",
+      "basePhysWeaponDmg": 51,
+      "baseMagWeaponDmg": 0
+    },
+    {
+      "name": "Bardiche",
+      "rarity": "POOR",
+      "weaponType": "AXE",
+      "handType": "TWO_HANDED",
+      "basePhysWeaponDmg": 54,
+      "baseMagWeaponDmg": 0
+    },
+    {
+      "name": "Morning Star",
+      "rarity": "POOR",
+      "weaponType": "MACE",
+      "handType": "MAIN_HAND",
+      "basePhysWeaponDmg": 32,
+      "baseMagWeaponDmg": 0
+    },
+    {
+      "name": "Flanged Mace",
+      "rarity": "POOR",
+      "weaponType": "MACE",
+      "handType": "MAIN_HAND",
+      "basePhysWeaponDmg": 31,
+      "baseMagWeaponDmg": 0
+    },
+    {
+      "name": "War Hammer",
+      "rarity": "POOR",
+      "weaponType": "MACE",
+      "handType": "MAIN_HAND",
+      "basePhysWeaponDmg": 33,
+      "baseMagWeaponDmg": 0
+    },
+    {
+      "name": "Club",
+      "rarity": "POOR",
+      "weaponType": "MACE",
+      "handType": "MAIN_HAND",
+      "basePhysWeaponDmg": 28,
+      "baseMagWeaponDmg": 0
+    },
+    {
+      "name": "War Maul",
+      "rarity": "POOR",
+      "weaponType": "MACE",
+      "handType": "TWO_HANDED",
+      "basePhysWeaponDmg": 50,
+      "baseMagWeaponDmg": 0
+    },
+    {
+      "name": "Rondel Dagger",
+      "rarity": "POOR",
+      "weaponType": "DAGGER",
+      "handType": "MAIN_HAND",
+      "basePhysWeaponDmg": 14,
+      "baseMagWeaponDmg": 0
+    },
+    {
+      "name": "Kris Dagger",
+      "rarity": "POOR",
+      "weaponType": "DAGGER",
+      "handType": "MAIN_HAND",
+      "basePhysWeaponDmg": 15,
+      "baseMagWeaponDmg": 0
+    },
+    {
+      "name": "Stiletto Dagger",
+      "rarity": "POOR",
+      "weaponType": "DAGGER",
+      "handType": "OFF_HAND",
+      "basePhysWeaponDmg": 16,
+      "baseMagWeaponDmg": 0
+    },
+    {
+      "name": "Castillon Dagger",
+      "rarity": "POOR",
+      "weaponType": "DAGGER",
+      "handType": "OFF_HAND",
+      "basePhysWeaponDmg": 19,
+      "baseMagWeaponDmg": 0
+    },
+    {
+      "name": "Crystal Dagger",
+      "rarity": "POOR",
+      "weaponType": "DAGGER",
+      "handType": "MAIN_HAND",
+      "basePhysWeaponDmg": 6,
+      "baseMagWeaponDmg": 10
+    }
+  ],
+  "armors": [
+    {
+      "name": "Templar Armor",
+      "rarity": "POOR",
+      "armorType": "PLATE",
+      "armorEquipRegion": "CHEST",
+      "baseDefense": 95,
+      "strength": 0,
+      "vigor": 0,
+      "agility": 0,
+      "dexterity": 0,
+      "will": 2,
+      "knowledge": 0,
+      "resourcefulness": 0
+    },
+    {
+      "name": "Dark Cuirass",
+      "rarity": "POOR",
+      "armorType": "PLATE",
+      "armorEquipRegion": "CHEST",
+      "baseDefense": 122,
+      "strength": 1,
+      "vigor": 0,
+      "agility": 0,
+      "dexterity": 0,
+      "will": 1,
+      "knowledge": 0,
+      "resourcefulness": 0
+    },
+    {
+      "name": "Wanderer Attire",
+      "rarity": "POOR",
+      "armorType": "CLOTH",
+      "armorEquipRegion": "CHEST",
+      "baseDefense": 37,
+      "strength": 1,
+      "vigor": 0,
+      "agility": 0,
+      "dexterity": 2,
+      "will": 0,
+      "knowledge": 0,
+      "resourcefulness": 0
+    },
+    {
+      "name": "Pourpoint",
+      "rarity": "POOR",
+      "armorType": "CLOTH",
+      "armorEquipRegion": "CHEST",
+      "baseDefense": 62,
+      "strength": 0,
+      "vigor": 0,
+      "agility": 0,
+      "dexterity": 0,
+      "will": 1,
+      "knowledge": 1,
+      "resourcefulness": 2
+    }
+  ]
+}

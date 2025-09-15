@@ -1,0 +1,20 @@
+{
+  "ruins": [
+    {
+      "name": "Skeleton Guardsman",
+      "tier": "NORMAL",
+      "health": 152,
+      "damage": 40,
+      "attackTimer": 3.75,
+      "hitRate": 0.9
+    },
+    {
+      "name": "Skelebob",
+      "tier": "NORMAL",
+      "health": 150,
+      "damage": 40,
+      "attackTimer": 1.0,
+      "hitRate": 0.9
+    }
+  ]
+}
