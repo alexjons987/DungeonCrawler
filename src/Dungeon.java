@@ -13,7 +13,7 @@ public class Dungeon {
         INFERNO
     }
 
-    private String name;
+    private String displayName;
     private ArrayList<Item> items;
     private ArrayList<Mob> mobs;
     private ArrayList<Chest> chests;
@@ -28,23 +28,24 @@ public class Dungeon {
 
         switch (preset) {
             case RUINS:
-                this.name = "Ruins";
+                this.displayName = "Ruins of the Forgotten Castle";
                 try {
                     // Items
                     this.items = generateStandardItemSet();
                     // Mobs
-
+                    this.mobs = generateMobSet(preset);
                     // Chests
+                    this.chests = new ArrayList<Chest>(); // TODO: Add generateChestSet()
                 } catch (Exception e) {
                     System.out.println("Unable to generate Dungeon content: " + e);
                 }
                 break;
             case CRYPTS:
-                this.name = "Crypts";
+                this.displayName = "Crypts";
                 break;
             case INFERNO:
-                this.name = "Inferno";
-                this.items.addAll(generateArtifactItemSet());
+                this.displayName = "Inferno";
+                // this.items.addAll(generateArtifactItemSet());
                 break;
             default:
                 throw new IllegalArgumentException(
@@ -102,8 +103,52 @@ public class Dungeon {
     }
 
     private ArrayList<Item> generateArtifactItemSet() {
-        // TODO: Add artifact items
+        // TODO: Add artifact items + artifact effects
         return new ArrayList<>();
+    }
+
+    private ArrayList<Mob> generateMobSet(DungeonPreset preset) throws IOException {
+        ArrayList<Mob> mobList = new ArrayList<Mob>();
+        String mobContent = new String(Files.readAllBytes(Paths.get("data/mobs.json")));
+        switch (preset) {
+            case RUINS:
+                try {
+                    JSONArray ruinsMobs = new JSONObject(mobContent).getJSONArray("ruins");
+                    for (Object obj : ruinsMobs) {
+                        JSONObject mob = (JSONObject) obj;
+
+                        String mobName = mob.getString("name");
+                        Mob.MobTier mobTier = mob.getEnum(Mob.MobTier.class, "tier");
+                        int mobHealth = mob.getInt("health");
+                        int mobDamage = mob.getInt("damage");
+                        int mobAttackTimer = mob.getInt("attackTimer");
+                        int mobHitRate = mob.getInt("hitRate");
+
+                        mobList.add(
+                                new Mob(mobName, mobTier, mobHealth, mobDamage, mobAttackTimer, mobHitRate)
+                        );
+                    }
+                    return mobList;
+                } catch (Exception e) {
+                    System.out.println("Unable to generate Mob set: " + e);
+                }
+                break;
+            case CRYPTS:
+                this.displayName = "Crypts";
+                break;
+            case INFERNO:
+                this.displayName = "Inferno";
+                break;
+            default:
+                throw new IllegalArgumentException(
+                        String.format("Unknown DungeonPreset given for generateMobSet(): %s", preset)
+                );
+        }
+        throw new IllegalStateException("Fell out of switch-case -> generateMobSet()");
+    }
+
+    public String toString() {
+        return String.format("\"%s\" contains %d possible items, %d different mobs and %d chest types", this.displayName, this.items.size(), this.mobs.size(), this.chests.size());
     }
 }
 
