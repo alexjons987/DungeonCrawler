@@ -158,19 +158,27 @@ public class Dungeon {
         return new ArrayList<Chest>();
     }
 
-    public Item getRandomDungeonItem() {
+    public Item generateRandomDungeonItem() {
         Random random = new Random();
-        return this.dungeonItems.get(random.nextInt(0, this.dungeonItems.size() + 1));
+        Item randomItem = this.dungeonItems.get(random.nextInt(0, this.dungeonItems.size()));
+        if (randomItem.getClass() == Armor.class)
+            return new Armor((Armor) randomItem);
+        else if (randomItem.getClass() == Weapon.class)
+            return new Weapon((Weapon) randomItem);
+
+        throw new IllegalStateException("Unable to generate a random dungeon item generateRandomDungeonItem()");
     }
 
-    public Item getRandomDungeonWeapon() {
+    public Weapon generateRandomDungeonWeapon() {
         Random random = new Random();
-        return this.dungeonWeapons.get(random.nextInt(0, this.dungeonWeapons.size() + 1));
+        Weapon randomWeapon = this.dungeonWeapons.get(random.nextInt(0, this.dungeonWeapons.size()));
+        return new Weapon(randomWeapon);
     }
 
-    public Item getRandomDungeonArmor() {
+    public Armor generateRandomDungeonArmor() {
         Random random = new Random();
-        return this.dungeonArmor.get(random.nextInt(0, this.dungeonArmor.size() + 1));
+        Armor randomArmor = this.dungeonArmor.get(random.nextInt(0, this.dungeonArmor.size()));
+        return new Armor(randomArmor);
     }
 
 
