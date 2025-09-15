@@ -30,13 +30,7 @@ public class Player {
     public Player() {
         this.stats = new Stats();
         this.health = this.stats.getMaxHP();
-        this.equippedMainHand = null;
-        this.equippedOffHand = null;
-    }
-
-    public Player(int strength, int vigor, int agility, int dexterity, int will, int knowledge, int resourcefulness) {
-        this.stats = new Stats(strength, vigor, agility, dexterity, will, knowledge, resourcefulness);
-        this.health = this.stats.getMaxHP();
+        this.inventory = new ArrayList<Item>();
         this.equippedHead = null;
         this.equippedChest = null;
         this.equippedLegs = null;
@@ -46,7 +40,21 @@ public class Player {
         this.equippedRing = null;
         this.equippedMainHand = null;
         this.equippedOffHand = null;
+    }
+
+    public Player(int strength, int vigor, int agility, int dexterity, int will, int knowledge, int resourcefulness) {
+        this.stats = new Stats(strength, vigor, agility, dexterity, will, knowledge, resourcefulness);
+        this.health = this.stats.getMaxHP();
         this.inventory = new ArrayList<Item>();
+        this.equippedHead = null;
+        this.equippedChest = null;
+        this.equippedLegs = null;
+        this.equippedHands = null;
+        this.equippedFeet = null;
+        this.equippedNecklace = null;
+        this.equippedRing = null;
+        this.equippedMainHand = null;
+        this.equippedOffHand = null;
     }
 
     // Getters / Setters
@@ -68,69 +76,137 @@ public class Player {
 
     // Funcs
     public void equipArmor(Armor armor) {
+
         switch (armor.getArmorEquipRegion()) {
             case Armor.ArmorEquipRegion.HEAD:
-                if (this.equippedHead != null)
+                if (this.equippedHead != null) { // TODO: Code within cases -> Make into function
+                    removeStatsFromArmor(this.equippedHead);
                     this.inventory.add(this.equippedHead);
+                }
                 this.equippedHead = armor;
+                addStatsFromArmor(armor);
                 this.inventory.remove(armor);
                 break;
             case Armor.ArmorEquipRegion.CHEST:
-                if (this.equippedChest != null)
+                if (this.equippedChest != null) {
+                    removeStatsFromArmor(equippedChest);
                     this.inventory.add(this.equippedChest);
+                }
                 this.equippedChest = armor;
+                addStatsFromArmor(armor);
                 this.inventory.remove(armor);
                 break;
             case Armor.ArmorEquipRegion.LEGS:
-                if (this.equippedLegs != null)
+                if (this.equippedLegs != null) {
+                    removeStatsFromArmor(equippedLegs);
                     this.inventory.add(this.equippedLegs);
+                }
                 this.equippedLegs = armor;
+                addStatsFromArmor(armor);
                 this.inventory.remove(armor);
                 break;
             case Armor.ArmorEquipRegion.HANDS:
-                if (this.equippedHands != null)
+                if (this.equippedHands != null) {
+                    removeStatsFromArmor(equippedHands);
                     this.inventory.add(this.equippedHands);
+                }
                 this.equippedHands = armor;
+                addStatsFromArmor(armor);
                 this.inventory.remove(armor);
                 break;
             case Armor.ArmorEquipRegion.FEET:
-                if (this.equippedFeet != null)
+                if (this.equippedFeet != null) {
+                    removeStatsFromArmor(equippedFeet);
                     this.inventory.add(this.equippedFeet);
+                }
                 this.equippedFeet = armor;
+                addStatsFromArmor(armor);
                 this.inventory.remove(armor);
                 break;
             case Armor.ArmorEquipRegion.NECKLACE:
-                if (this.equippedNecklace != null)
+                if (this.equippedNecklace != null) {
+                    removeStatsFromArmor(this.equippedNecklace);
                     this.inventory.add(this.equippedNecklace);
+                }
                 this.equippedNecklace = armor;
+                addStatsFromArmor(armor);
                 this.inventory.remove(armor);
                 break;
             case Armor.ArmorEquipRegion.RING:
-                if (this.equippedRing != null)
+                if (this.equippedRing != null) {
+                    removeStatsFromArmor(this.equippedRing);
                     this.inventory.add(this.equippedRing);
+                }
                 this.equippedRing = armor;
+                addStatsFromArmor(armor);
                 this.inventory.remove(armor);
                 break;
         }
-        // TODO: Implement stats being modified by equipped armor
     }
 
-    public void recalculateStats() {
+    // TODO: Combine add/remove stats to one func
+    private void addStatsFromArmor(Armor armor) {
+        Stats armorStats = armor.getStats();
 
+        int armorStrength = armorStats.getStrength();
+        int armorVigor = armorStats.getVigor();
+        int armorAgility = armorStats.getAgility();
+        int armorDexterity = armorStats.getDexterity();
+        int armorWill = armorStats.getWill();
+        int armorKnowledge = armorStats.getKnowledge();
+        int armorResourcefulness = armorStats.getResourcefulness();
+
+        this.stats.setStrength(this.stats.getStrength() + armorStrength);
+        this.stats.setVigor(this.stats.getVigor() + armorVigor);
+        this.stats.setAgility(this.stats.getAgility() + armorAgility);
+        this.stats.setDexterity(this.stats.getDexterity() + armorDexterity);
+        this.stats.setWill(this.stats.getWill() + armorWill);
+        this.stats.setKnowledge(this.stats.getKnowledge() + armorKnowledge);
+        this.stats.setResourcefulness(this.stats.getResourcefulness() + armorResourcefulness);
+
+        for (int n : new int[]{ armorStrength, armorVigor, armorAgility, armorDexterity, armorWill, armorKnowledge, armorResourcefulness }) {
+            System.out.printf("%d ", n);
+        }
+        System.out.println();
     }
 
-    public boolean equipWeapon(Weapon weapon) {
-        // TODO: Add base func, add handtype checks
-        return true;
+    private void removeStatsFromArmor(Armor armor) {
+        Stats armorStats = armor.getStats();
+
+        int armorStrength = armorStats.getStrength() * -1;
+        int armorVigor = armorStats.getVigor() * -1;
+        int armorAgility = armorStats.getAgility() * -1;
+        int armorDexterity = armorStats.getDexterity() * -1;
+        int armorWill = armorStats.getWill() * -1;
+        int armorKnowledge = armorStats.getKnowledge() * -1;
+        int armorResourcefulness = armorStats.getResourcefulness() * -1;
+
+        this.stats.setStrength(this.stats.getStrength() + armorStrength);
+        this.stats.setVigor(this.stats.getVigor() + armorVigor);
+        this.stats.setAgility(this.stats.getAgility() + armorAgility);
+        this.stats.setDexterity(this.stats.getDexterity() + armorDexterity);
+        this.stats.setWill(this.stats.getWill() + armorWill);
+        this.stats.setKnowledge(this.stats.getKnowledge() + armorKnowledge);
+        this.stats.setResourcefulness(this.stats.getResourcefulness() + armorResourcefulness);
+
+        for (int n : new int[]{ armorStrength, armorVigor, armorAgility, armorDexterity, armorWill, armorKnowledge, armorResourcefulness }) {
+            System.out.printf("%d ", n);
+        }
+        System.out.println();
+    }
+
+    public void equipWeapon(Weapon weapon) {
+
     }
 
     public void addItemToInventory(Item item) {
+        this.inventory.add(item);
         System.out.printf("Added %s to inventory.%n", item.toStringShort());
     }
 
     public void showInventory() {
         for (Item item : this.inventory)
-            System.out.println(item.toString());
+            System.out.printf("%s%n", item.toString());
     }
 
     // To String

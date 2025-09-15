@@ -66,6 +66,10 @@ public class Armor extends Item {
 
     // TODO: Implement setRarity and recalculate armor rating and stats
 
+    public Stats getStats() {
+        return this.stats;
+    }
+
     public ArmorEquipRegion getArmorEquipRegion() {
         return this.armorEquipRegion;
     }
