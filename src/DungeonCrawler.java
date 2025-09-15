@@ -34,17 +34,17 @@ public class DungeonCrawler {
             case 1:
                 this.player = new Player(15, 15, 15, 15, 15, 15, 15);
                 System.out.println("- Your base stats -");
-                System.out.println(this.player.toString());
+                System.out.println(this.player.toStringStats());
                 break;
             case 2:
                 this.player = new Player(20, 25, 13, 12, 18, 5, 12);
                 System.out.println("- Your base stats -");
-                System.out.println(this.player.toString());
+                System.out.println(this.player.toStringStats());
                 break;
             case 3:
                 this.player = new Player(9, 6, 25, 20, 10, 10, 25);
                 System.out.println("- Your base stats -");
-                System.out.println(this.player.toString());
+                System.out.println(this.player.toStringStats());
                 break;
         }
 
@@ -69,22 +69,53 @@ public class DungeonCrawler {
                 this.dungeon = new Dungeon(Dungeon.DungeonPreset.INFERNO);
                 break;
         }
-        System.out.printf("Generated %s%n", this.dungeon.toString());
-
+        System.out.printf("Generated %s%n%n", this.dungeon.toString());
         System.out.println("You wake up. It being dark and unsure of your whereabouts, you scramble and quickly grab what you find...");
         // Give three random [POOR] armor items
-        this.player.addItemToInventory(this.dungeon.getRandomDungeonArmor());
-        this.player.addItemToInventory(this.dungeon.getRandomDungeonArmor());
-        this.player.addItemToInventory(this.dungeon.getRandomDungeonArmor());
+        Item itemA = this.dungeon.generateRandomDungeonArmor();
+        Item itemB = this.dungeon.generateRandomDungeonArmor();
+        Item itemC = this.dungeon.generateRandomDungeonArmor();
+        this.player.addItemToInventory(itemA);
+        this.player.addItemToInventory(itemB);
+        this.player.addItemToInventory(itemC);
         // Give player one random [POOR] weapon
-        this.player.addItemToInventory(this.dungeon.getRandomDungeonWeapon());
+        Item weapon = this.dungeon.generateRandomDungeonWeapon();
+        this.player.addItemToInventory(weapon);
+
+        System.out.println("\nInventory:");
+        this.player.showInventory();
+
+        System.out.println("Trying to equip: " + itemA.toStringShort());
+        this.player.equipArmor((Armor) itemA);
+        System.out.println("Trying to equip: " + itemB.toStringShort());
+        this.player.equipArmor((Armor) itemB);
+        System.out.println("Trying to equip: " + itemC.toStringShort());
+        this.player.equipArmor((Armor) itemC);
+
+        System.out.println("\nInventory after equipping:");
+        this.player.showInventory();
+
+        System.out.println("\n- Full player info -");
+        System.out.println(this.player.toString());
 
         mainGameLoop();
     }
 
     private void mainGameLoop() {
-        while (!gameOver) {
 
-        }
+        // You take a minute to rest
+        // 1. Go deeper into the dungeon
+        // 2. Examine yourself (Show stats)
+        // 3. Open your backpack (Show all items and their stats)
+        //      3a. Equip an item
+        //      3b. Close your backpack
+        // 4. Rest
+        //      4a. Light a campfire
+        //      4b. Pray
+
+
+//        while (!gameOver) {
+//
+//        }
     }
 }

@@ -14,10 +14,10 @@ public class Player {
     Armor equippedHead;
     Armor equippedChest;
     Armor equippedLegs;
+    Armor equippedHands;
     Armor equippedFeet;
     Armor equippedNecklace;
-    Armor equippedRingLeft;
-    Armor equippedRingRight;
+    Armor equippedRing;
 
     // Equipped weapon(s)
     Weapon equippedMainHand;
@@ -40,12 +40,13 @@ public class Player {
         this.equippedHead = null;
         this.equippedChest = null;
         this.equippedLegs = null;
+        this.equippedHands = null;
         this.equippedFeet = null;
         this.equippedNecklace = null;
-        this.equippedRingLeft = null;
-        this.equippedRingRight = null;
+        this.equippedRing = null;
         this.equippedMainHand = null;
         this.equippedOffHand = null;
+        this.inventory = new ArrayList<Item>();
     }
 
     // Getters / Setters
@@ -66,8 +67,60 @@ public class Player {
     }
 
     // Funcs
-    public boolean equipArmor(Armor armor) {
-        // TODO: Add base fun, add equip region checks
+    public void equipArmor(Armor armor) {
+        switch (armor.getArmorEquipRegion()) {
+            case Armor.ArmorEquipRegion.HEAD:
+                if (this.equippedHead != null)
+                    this.inventory.add(this.equippedHead);
+                this.equippedHead = armor;
+                this.inventory.remove(armor);
+                break;
+            case Armor.ArmorEquipRegion.CHEST:
+                if (this.equippedChest != null)
+                    this.inventory.add(this.equippedChest);
+                this.equippedChest = armor;
+                this.inventory.remove(armor);
+                break;
+            case Armor.ArmorEquipRegion.LEGS:
+                if (this.equippedLegs != null)
+                    this.inventory.add(this.equippedLegs);
+                this.equippedLegs = armor;
+                this.inventory.remove(armor);
+                break;
+            case Armor.ArmorEquipRegion.HANDS:
+                if (this.equippedHands != null)
+                    this.inventory.add(this.equippedHands);
+                this.equippedHands = armor;
+                this.inventory.remove(armor);
+                break;
+            case Armor.ArmorEquipRegion.FEET:
+                if (this.equippedFeet != null)
+                    this.inventory.add(this.equippedFeet);
+                this.equippedFeet = armor;
+                this.inventory.remove(armor);
+                break;
+            case Armor.ArmorEquipRegion.NECKLACE:
+                if (this.equippedNecklace != null)
+                    this.inventory.add(this.equippedNecklace);
+                this.equippedNecklace = armor;
+                this.inventory.remove(armor);
+                break;
+            case Armor.ArmorEquipRegion.RING:
+                if (this.equippedRing != null)
+                    this.inventory.add(this.equippedRing);
+                this.equippedRing = armor;
+                this.inventory.remove(armor);
+                break;
+        }
+        // TODO: Implement stats being modified by equipped armor
+    }
+
+    public void recalculateStats() {
+
+    }
+
+    public boolean equipWeapon(Weapon weapon) {
+        // TODO: Add base func, add handtype checks
         return true;
     }
 
@@ -75,18 +128,42 @@ public class Player {
         System.out.printf("Added %s to inventory.%n", item.toStringShort());
     }
 
+    public void showInventory() {
+        for (Item item : this.inventory)
+            System.out.println(item.toString());
+    }
+
     // To String
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(String.format(
-            "Strength: %d%n" + //
-            "Vigor: %d%n" + //
-            "Agility: %d%n" + //
-            "Dexterity: %d%n" + //
-            "Will: %d%n" + //
-            "Knowledge: %d%n" + //
-            "Resourcefulness: %d%n" + //
-            "Health: %d/%d (%.1f%%)%n" + //
+    public String toStringEquipped() {
+        return String.format(
+            "Head: %s%n" +
+            "Chest: %s%n" +
+            "Legs: %s%n" +
+            "Hands: %s%n" +
+            "Feet: %s%n" +
+            "Necklace: %s%n" +
+            "Ring: %s%n",
+            this.equippedHead == null ? "None" : this.equippedHead.toString(),
+            this.equippedChest == null ? "None" : this.equippedChest.toString(),
+            this.equippedLegs == null ? "None" : this.equippedLegs.toString(),
+            this.equippedHands == null ? "None" : this.equippedHands.toString(),
+            this.equippedFeet == null ? "None" : this.equippedFeet.toString(),
+            this.equippedNecklace == null ? "None" : this.equippedNecklace.toString(),
+            this.equippedRing == null ? "None" : this.equippedRing.toString()
+            // TODO: Add equipped weapon
+        );
+    }
+
+    public String toStringStats() {
+        return String.format(
+            "Strength: %d%n" +
+            "Vigor: %d%n" +
+            "Agility: %d%n" +
+            "Dexterity: %d%n" +
+            "Will: %d%n" +
+            "Knowledge: %d%n" +
+            "Resourcefulness: %d%n" +
+            "Health: %d/%d (%.1f%%)%n" +
             "Action Speed: %.1f%%",
             this.stats.getStrength(),
             this.stats.getVigor(),
@@ -99,8 +176,11 @@ public class Player {
             this.stats.getMaxHP(),
             this.getHealthPercentage() * 100,
             this.stats.getActionSpeed()
-        ));
-        return sb.toString();
+        );
+    }
+
+    public String toString() {
+        return String.format("%s%n%s", this.toStringEquipped(), this.toStringStats());
     }
 
     // TODO: Make stats (will/knowledge) increase/decrease effectiveness of abilities/perks
