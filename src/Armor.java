@@ -56,6 +56,20 @@ public class Armor extends Item {
         this.stats = new Stats(strength, vigor, agility, dexterity, will, knowledge, resourcefulness);
     }
 
+    public Armor(Armor armor) {
+        super(armor.getName(), armor.getRarity());
+        this.armorType = armor.armorType;
+        this.armorEquipRegion = armor.armorEquipRegion;
+        this.baseArmorRating = armor.baseArmorRating;
+        this.stats = armor.stats;
+    }
+
+    // TODO: Implement setRarity and recalculate armor rating and stats
+
+    public ArmorEquipRegion getArmorEquipRegion() {
+        return this.armorEquipRegion;
+    }
+
     public String toStringShort() {
         return String.format(
                 "[%s] %s (%s - %s)",

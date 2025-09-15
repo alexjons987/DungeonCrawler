@@ -31,8 +31,21 @@ public abstract class Item {
         this.rarity = rarity;
     }
 
+    public Item(Item item) {
+        this.name = item.getName();
+        this.rarity = item.getRarity();
+    }
+
     public String getName() {
         return this.name;
+    }
+
+    public void setRarity(Rarity rarity) {
+        this.rarity = rarity;
+    }
+
+    public Rarity getRarity() {
+        return this.rarity;
     }
 
     public Rarity getRandomRarity(Rarity lowesRarity, Rarity highestRarity) {
@@ -40,7 +53,7 @@ public abstract class Item {
         int highest = highestRarity.getStatMultiplier();
         if (lowest > highest) {
             throw new IllegalArgumentException(
-                String.format("Lowest rarity cannoy be a greater rarity than highest rarity")
+                String.format("Lowest rarity cannot be a greater rarity than highest rarity")
             );
         }
         
@@ -54,14 +67,6 @@ public abstract class Item {
         throw new IllegalStateException(
             String.format("Did not find a matching rarity for: %s", rarity)
         );
-    }
-
-    public Rarity getRarity() {
-        return this.rarity;
-    }
-
-    public void setRarity(Rarity rarity) {
-        this.rarity = rarity;
     }
 
     public abstract String toStringShort();

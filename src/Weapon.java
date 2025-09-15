@@ -47,6 +47,18 @@ public class Weapon extends Item {
         this.attackTimer = 0.044f * (basePhysWeaponDmg + baseMagWeaponDmg);
     }
 
+    public Weapon(Weapon weapon) {
+        super(weapon.getName(),weapon.getRarity());
+        this.weaponType = weapon.weaponType;
+        this.handType = weapon.handType;
+        this.basePhysWeaponDmg = weapon.basePhysWeaponDmg;
+        if (weapon.baseMagWeaponDmg > 0)
+            this.baseMagWeaponDmg = weapon.baseMagWeaponDmg + (weapon.weaponType.getScaling() * weapon.getRarity().getStatMultiplier());
+        else
+            this.baseMagWeaponDmg = 0;
+        this.attackTimer = 0.044f * (weapon.basePhysWeaponDmg + weapon.baseMagWeaponDmg);
+    }
+
     public void setRarity(Rarity rarity) {
         super.setRarity(rarity);
         this.basePhysWeaponDmg = basePhysWeaponDmg + (weaponType.getScaling() * rarity.getStatMultiplier()); // Re-calculate weapone damage
