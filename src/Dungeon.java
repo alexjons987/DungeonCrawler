@@ -148,7 +148,7 @@ public class Dungeon {
     }
 
     public String toString() {
-        return String.format("\"%s\" contains %d possible items, %d different mobs and %d chest types", this.displayName, this.items.size(), this.mobs.size(), this.chests.size());
+        return String.format("\"%s\" with %d possible items, %d different mobs and %d chest types.", this.displayName, this.items.size(), this.mobs.size(), this.chests.size());
     }
 }
 
