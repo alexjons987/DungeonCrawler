@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.json.*;
 
@@ -14,7 +15,9 @@ public class Dungeon {
     }
 
     private String displayName;
-    private ArrayList<Item> items;
+    private ArrayList<Weapon> dungeonWeapons;
+    private ArrayList<Armor> dungeonArmor;
+    private ArrayList<Item> dungeonItems; // Items is a combination of both weapons and armor
     private ArrayList<Mob> mobs;
     private ArrayList<Chest> chests;
 
@@ -22,7 +25,9 @@ public class Dungeon {
 
     public Dungeon(DungeonPreset preset) {
 
-        this.items = new ArrayList<Item>();
+        this.dungeonWeapons = new ArrayList<Weapon>();
+        this.dungeonArmor = new ArrayList<Armor>();
+        this.dungeonItems = new ArrayList<Item>();
         this.mobs = new ArrayList<Mob>();
         this.chests = new ArrayList<Chest>();
 
@@ -31,7 +36,7 @@ public class Dungeon {
                 this.displayName = "Ruins of the Forgotten Castle";
                 try {
                     // Items
-                    this.items = generateStandardItemSet();
+                    this.dungeonItems = generateStandardItemSet();
                     // Mobs
                     this.mobs = generateMobSet(preset);
                     // Chests
@@ -71,9 +76,10 @@ public class Dungeon {
             int basePhysDmg = weapon.getInt("basePhysWeaponDmg");
             int baseMagDmg = weapon.getInt("baseMagWeaponDmg");
 
-            itemList.add(
-                    new Weapon(weaponName, weaponRarity, weaponType, weaponHandType, basePhysDmg, baseMagDmg)
-            );
+            Weapon generatedWeapon = new Weapon(weaponName, weaponRarity, weaponType, weaponHandType,
+                    basePhysDmg, baseMagDmg);
+            this.dungeonWeapons.add(generatedWeapon);
+            itemList.add(generatedWeapon);
         }
 
         JSONArray armors = new JSONObject(itemDataContent).getJSONArray("armors");
@@ -93,10 +99,10 @@ public class Dungeon {
             int knowledge = armor.getInt("knowledge");
             int resourcefulness = armor.getInt("resourcefulness");
 
-            itemList.add(
-                    new Armor(armorName, armorRarity, armorType, armorEquipRegion, armorBaseDefense, strength, vigor,
-                            agility, dexterity, will, knowledge, resourcefulness)
-            );
+            Armor generatedArmor = new Armor(armorName, armorRarity, armorType, armorEquipRegion,
+                    armorBaseDefense, strength, vigor, agility, dexterity, will, knowledge, resourcefulness);
+            this.dungeonArmor.add(generatedArmor);
+            itemList.add(generatedArmor);
         }
 
         return itemList;
@@ -147,8 +153,29 @@ public class Dungeon {
         throw new IllegalStateException("Fell out of switch-case -> generateMobSet()");
     }
 
+    // TODO: Implement generateChestSet()
+    private ArrayList<Chest> generateChestSet(DungeonPreset preset) {
+        return new ArrayList<Chest>();
+    }
+
+    public Item getRandomDungeonItem() {
+        Random random = new Random();
+        return this.dungeonItems.get(random.nextInt(0, this.dungeonItems.size() + 1));
+    }
+
+    public Item getRandomDungeonWeapon() {
+        Random random = new Random();
+        return this.dungeonWeapons.get(random.nextInt(0, this.dungeonWeapons.size() + 1));
+    }
+
+    public Item getRandomDungeonArmor() {
+        Random random = new Random();
+        return this.dungeonArmor.get(random.nextInt(0, this.dungeonArmor.size() + 1));
+    }
+
+
     public String toString() {
-        return String.format("\"%s\" with %d possible items, %d different mobs and %d chest types.", this.displayName, this.items.size(), this.mobs.size(), this.chests.size());
+        return String.format("\"%s\" with %d possible items, %d different mobs and %d chest types.", this.displayName, this.dungeonItems.size(), this.mobs.size(), this.chests.size());
     }
 }
 

@@ -72,7 +72,7 @@ public class Player {
     }
 
     public void addItemToInventory(Item item) {
-        System.out.printf("Added %s to inventory.", item.toStringShort());
+        System.out.printf("Added %s to inventory.%n", item.toStringShort());
     }
 
     // To String

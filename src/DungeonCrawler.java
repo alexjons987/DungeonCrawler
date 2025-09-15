@@ -61,21 +61,23 @@ public class DungeonCrawler {
         switch (dungeonChoice) {
             case 1:
                 this.dungeon = new Dungeon(Dungeon.DungeonPreset.RUINS);
-                System.out.printf("Generated %s", this.dungeon.toString());
                 break;
             case 2:
                 this.dungeon = new Dungeon(Dungeon.DungeonPreset.CRYPTS);
-                System.out.printf("Generated %s", this.dungeon.toString());
                 break;
             case 3:
                 this.dungeon = new Dungeon(Dungeon.DungeonPreset.INFERNO);
-                System.out.printf("Generated %s", this.dungeon.toString());
                 break;
         }
+        System.out.printf("Generated %s%n", this.dungeon.toString());
 
         System.out.println("You wake up. It being dark and unsure of your whereabouts, you scramble and quickly grab what you find...");
         // Give three random [POOR] armor items
+        this.player.addItemToInventory(this.dungeon.getRandomDungeonArmor());
+        this.player.addItemToInventory(this.dungeon.getRandomDungeonArmor());
+        this.player.addItemToInventory(this.dungeon.getRandomDungeonArmor());
         // Give player one random [POOR] weapon
+        this.player.addItemToInventory(this.dungeon.getRandomDungeonWeapon());
 
         mainGameLoop();
     }
