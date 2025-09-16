@@ -448,7 +448,7 @@
     },
     {
       "name": "Badger Pendant",
-      "rarity": "UNCOMMON",
+      "rarity": "POOR",
       "armorType": "ACCESSORY",
       "armorEquipRegion": "NECKLACE",
       "baseDefense": 0,
@@ -456,18 +456,18 @@
       "vigor": 0,
       "agility": 0,
       "dexterity": 0,
-      "will": 1,
+      "will": -1,
       "knowledge": 0,
       "resourcefulness": 0
     },
     {
       "name": "Bear Pendant",
-      "rarity": "UNCOMMON",
+      "rarity": "POOR",
       "armorType": "ACCESSORY",
       "armorEquipRegion": "NECKLACE",
       "baseDefense": 0,
       "strength": 0,
-      "vigor": 1,
+      "vigor": -1,
       "agility": 0,
       "dexterity": 0,
       "will": 0,
@@ -476,11 +476,11 @@
     },
     {
       "name": "Ox Pendant",
-      "rarity": "UNCOMMON",
+      "rarity": "POOR",
       "armorType": "ACCESSORY",
       "armorEquipRegion": "NECKLACE",
       "baseDefense": 0,
-      "strength": 1,
+      "strength": -1,
       "vigor": 0,
       "agility": 0,
       "dexterity": 0,
@@ -490,7 +490,7 @@
     },
     {
       "name": "Rat Pendant",
-      "rarity": "UNCOMMON",
+      "rarity": "POOR",
       "armorType": "ACCESSORY",
       "armorEquipRegion": "NECKLACE",
       "baseDefense": 0,
@@ -500,31 +500,31 @@
       "dexterity": 0,
       "will": 0,
       "knowledge": 0,
-      "resourcefulness": 1
+      "resourcefulness": -1
     },
     {
       "name": "Ring of Finesse",
-      "rarity": "UNCOMMON",
+      "rarity": "POOR",
       "armorType": "ACCESSORY",
       "armorEquipRegion": "RING",
       "baseDefense": 0,
       "strength": 0,
       "vigor": 0,
       "agility": 0,
-      "dexterity": 1,
+      "dexterity": -1,
       "will": 0,
       "knowledge": 0,
       "resourcefulness": 0
     },
     {
       "name": "Ring of Quickness",
-      "rarity": "UNCOMMON",
+      "rarity": "POOR",
       "armorType": "ACCESSORY",
       "armorEquipRegion": "RING",
       "baseDefense": 0,
       "strength": 0,
       "vigor": 0,
-      "agility": 1,
+      "agility": -1,
       "dexterity": 0,
       "will": 0,
       "knowledge": 0,
@@ -532,7 +532,7 @@
     },
     {
       "name": "Ring of Wisdom",
-      "rarity": "UNCOMMON",
+      "rarity": "POOR",
       "armorType": "ACCESSORY",
       "armorEquipRegion": "RING",
       "baseDefense": 0,
@@ -541,12 +541,12 @@
       "agility": 0,
       "dexterity": 0,
       "will": 0,
-      "knowledge": 1,
+      "knowledge": -1,
       "resourcefulness": 0
     },
     {
       "name": "Ring of Survival",
-      "rarity": "UNCOMMON",
+      "rarity": "POOR",
       "armorType": "ACCESSORY",
       "armorEquipRegion": "RING",
       "baseDefense": 0,
@@ -556,7 +556,7 @@
       "dexterity": 0,
       "will": 0,
       "knowledge": 0,
-      "resourcefulness": 1
+      "resourcefulness": -1
     }
   ]
 }

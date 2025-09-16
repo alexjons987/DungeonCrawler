@@ -19,6 +19,7 @@ public class Chest {
         this.possibleItems = possibleItems;
     }
 
+    // TODO: Re-write and implement
     public Item openChest(Player player, Item.Rarity lowesRarity, Item.Rarity highestRarity) {
         Random random = new Random();
 
@@ -29,7 +30,7 @@ public class Chest {
         Item.Rarity rarity = item.getRandomRarity(lowesRarity, highestRarity);
 
         // Set rolled rarity for item
-        item.setRarity(rarity);
+        item.increaseRarity(rarity);
 
         return item;
     }

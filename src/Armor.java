@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 public class Armor extends Item {
 
     public enum ArmorType {
@@ -49,17 +51,17 @@ public class Armor extends Item {
         }
     }
 
-    private ArmorType armorType;
-    private ArmorEquipRegion armorEquipRegion;
-    private int baseArmorRating;
-    private Stats stats;
+    private final ArmorType armorType;
+    private final ArmorEquipRegion armorEquipRegion;
+    private final Stats stats;
+    private int armorRating;
 
-    public Armor(String name, Rarity rarity, ArmorType armorType, ArmorEquipRegion armorEquipRegion, int baseArmorRating, int strength, int vigor,
+    public Armor(String name, Rarity rarity, ArmorType armorType, ArmorEquipRegion armorEquipRegion, int armorRating, int strength, int vigor,
             int agility, int dexterity, int will, int knowledge, int resourcefulness) {
         super(name, rarity);
         this.armorType = armorType;
         this.armorEquipRegion = armorEquipRegion;
-        this.baseArmorRating = baseArmorRating + (armorType.getArmorScaling() * rarity.getStatMultiplier());
+        this.armorRating = armorRating + (armorType.getArmorScaling() * rarity.getStatMultiplier());
         this.stats = new Stats(strength, vigor, agility, dexterity, will, knowledge, resourcefulness);
     }
 
@@ -67,11 +69,33 @@ public class Armor extends Item {
         super(armor.getName(), armor.getRarity());
         this.armorType = armor.armorType;
         this.armorEquipRegion = armor.armorEquipRegion;
-        this.baseArmorRating = armor.baseArmorRating;
+        this.armorRating = armor.armorRating;
         this.stats = armor.stats;
     }
 
     // TODO: Implement setRarity and recalculate armor rating and stats
+    public void increaseRarity(Rarity rarity) {
+        super.increaseRarity(rarity);
+
+        this.armorRating = armorRating + (armorType.getArmorScaling() * rarity.getStatMultiplier());
+
+        HashMap<String, Integer> statMap = this.stats.getAllAttributes();
+
+        if (statMap.get("strength") != 0)
+            this.stats.setStrength(statMap.get("strength") + (armorType.getStatScaling() * rarity.getStatMultiplier()));
+        if (statMap.get("vigor") != 0)
+            this.stats.setVigor(statMap.get("vigor") + (armorType.getStatScaling() * rarity.getStatMultiplier()));
+        if (statMap.get("agility") != 0)
+            this.stats.setAgility(statMap.get("agility") + (armorType.getStatScaling() * rarity.getStatMultiplier()));
+        if (statMap.get("dexterity") != 0)
+            this.stats.setDexterity(statMap.get("dexterity") + (armorType.getStatScaling() * rarity.getStatMultiplier()));
+        if (statMap.get("will") != 0)
+            this.stats.setWill(statMap.get("will") + (armorType.getStatScaling() * rarity.getStatMultiplier()));
+        if (statMap.get("knowledge") != 0)
+            this.stats.setKnowledge(statMap.get("knowledge") + (armorType.getStatScaling() * rarity.getStatMultiplier()));
+        if (statMap.get("resourcefulness") != 0)
+            this.stats.setResourcefulness(statMap.get("resourcefulness") + (armorType.getStatScaling() * rarity.getStatMultiplier()));
+    }
 
     public Stats getStats() {
         return this.stats;
@@ -100,7 +124,7 @@ public class Armor extends Item {
                 this.getName(),
                 this.armorType.getDisplayName(),
                 this.armorEquipRegion.getDisplayName(),
-                this.baseArmorRating
+                this.armorRating
             )
         );
 

@@ -97,6 +97,6 @@ public class Stats {
 
     public float getActionSpeed() {
         float actionSpeed = (this.agility * 0.25f + this.dexterity * 0.75f) / 15.0f;
-        return (float) Math.pow(actionSpeed, 2) - 1.0f; // Scale action speed quadratically
+        return (float) Math.pow(actionSpeed, 3) - 1.0f;
     }
 }

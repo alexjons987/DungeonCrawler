@@ -6,9 +6,9 @@ public class Player {
 
     }
 
-    private Stats stats;
+    private final Stats stats;
     private int health;
-    private ArrayList<Item> inventory;
+    private final ArrayList<Item> inventory;
 
     // Equipped armor
     Armor equippedHead;

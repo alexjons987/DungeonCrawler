@@ -29,8 +29,8 @@ public class Weapon extends Item {
         OFF_HAND
     }
 
-    private WeaponType weaponType;
-    private HandType handType;
+    private final WeaponType weaponType;
+    private final HandType handType;
     private int basePhysWeaponDmg;
     private int baseMagWeaponDmg;
     private int attackTimer;
@@ -48,7 +48,7 @@ public class Weapon extends Item {
     }
 
     public Weapon(Weapon weapon) {
-        super(weapon.getName(),weapon.getRarity());
+        super(weapon.getName(), weapon.getRarity());
         this.weaponType = weapon.weaponType;
         this.handType = weapon.handType;
         this.basePhysWeaponDmg = weapon.basePhysWeaponDmg;
@@ -59,8 +59,8 @@ public class Weapon extends Item {
         this.attackTimer = 44 * (weapon.basePhysWeaponDmg + weapon.baseMagWeaponDmg);
     }
 
-    public void setRarity(Rarity rarity) {
-        super.setRarity(rarity);
+    public void increaseRarity(Rarity rarity) {
+        super.increaseRarity(rarity);
         this.basePhysWeaponDmg = basePhysWeaponDmg + (weaponType.getScaling() * rarity.getStatMultiplier()); // Re-calculate weapone damage
         if (this.baseMagWeaponDmg > 0)
             this.baseMagWeaponDmg = baseMagWeaponDmg + (weaponType.getScaling() * rarity.getStatMultiplier());
