@@ -209,6 +209,22 @@ public class Player {
 
     public void equipWeapon(Weapon weapon) {
 
+        if (this.equippedMainHand != null) {
+            this.inventory.add(this.equippedMainHand);
+        }
+        if (this.equippedOffHand != null) {
+            this.inventory.add(this.equippedOffHand);
+        }
+
+        switch (weapon.getHandType()) {
+            case Weapon.HandType.TWO_HANDED:
+            case Weapon.HandType.MAIN_HAND:
+                this.equippedMainHand = weapon;
+                break;
+            case Weapon.HandType.OFF_HAND:
+                this.equippedOffHand = weapon;
+                break;
+        }
     }
 
     public void addItemToInventory(Item item) {
@@ -230,15 +246,18 @@ public class Player {
             "Hands: %s%n" +
             "Feet: %s%n" +
             "Necklace: %s%n" +
-            "Ring: %s%n",
+            "Ring: %s%n" +
+            "Main-hand: %s%n" +
+            "Off-hand: %s%n",
             this.equippedHead == null ? "None" : this.equippedHead.toString(),
             this.equippedChest == null ? "None" : this.equippedChest.toString(),
             this.equippedLegs == null ? "None" : this.equippedLegs.toString(),
             this.equippedHands == null ? "None" : this.equippedHands.toString(),
             this.equippedFeet == null ? "None" : this.equippedFeet.toString(),
             this.equippedNecklace == null ? "None" : this.equippedNecklace.toString(),
-            this.equippedRing == null ? "None" : this.equippedRing.toString()
-            // TODO: Add equipped weapon
+            this.equippedRing == null ? "None" : this.equippedRing.toString(),
+            this.equippedMainHand == null ? "None" : this.equippedMainHand.toString(),
+            this.equippedOffHand == null ? "None" : this.equippedOffHand.toString()
         );
     }
 

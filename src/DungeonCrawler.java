@@ -92,6 +92,8 @@ public class DungeonCrawler {
         this.player.equipArmor(itemB);
         System.out.println("Trying to equip: " + itemC.toStringShort());
         this.player.equipArmor(itemC);
+        System.out.println("Trying to equip: " + weapon.toStringShort());
+        this.player.equipWeapon(weapon);
 
         System.out.println("\nInventory after equipping:");
         this.player.showInventory();

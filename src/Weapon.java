@@ -33,7 +33,7 @@ public class Weapon extends Item {
     private HandType handType;
     private int basePhysWeaponDmg;
     private int baseMagWeaponDmg;
-    private float attackTimer;
+    private int attackTimer;
 
     public Weapon(String name, Rarity rarity, WeaponType weaponType, HandType handType, int basePhysWeaponDmg, int baseMagWeaponDmg) {
         super(name, rarity);
@@ -44,7 +44,7 @@ public class Weapon extends Item {
             this.baseMagWeaponDmg = baseMagWeaponDmg + (weaponType.getScaling() * rarity.getStatMultiplier());
         else
             this.baseMagWeaponDmg = 0;
-        this.attackTimer = 0.044f * (basePhysWeaponDmg + baseMagWeaponDmg);
+        this.attackTimer = 44 * (basePhysWeaponDmg + baseMagWeaponDmg);
     }
 
     public Weapon(Weapon weapon) {
@@ -56,7 +56,7 @@ public class Weapon extends Item {
             this.baseMagWeaponDmg = weapon.baseMagWeaponDmg + (weapon.weaponType.getScaling() * weapon.getRarity().getStatMultiplier());
         else
             this.baseMagWeaponDmg = 0;
-        this.attackTimer = 0.044f * (weapon.basePhysWeaponDmg + weapon.baseMagWeaponDmg);
+        this.attackTimer = 44 * (weapon.basePhysWeaponDmg + weapon.baseMagWeaponDmg);
     }
 
     public void setRarity(Rarity rarity) {
@@ -66,6 +66,14 @@ public class Weapon extends Item {
             this.baseMagWeaponDmg = baseMagWeaponDmg + (weaponType.getScaling() * rarity.getStatMultiplier());
         else
             this.baseMagWeaponDmg = 0;
+    }
+
+    public Weapon.WeaponType getWeaponType() {
+        return this.weaponType;
+    }
+
+    public Weapon.HandType getHandType() {
+        return this.handType;
     }
 
     private String getHandTypeString() {
@@ -93,7 +101,7 @@ public class Weapon extends Item {
 
     public String toString() {
         return String.format(
-                "[%s] %s (%s) (%s) - %d+%d (%.3f)",
+                "[%s] %s (%s) (%s) - %d+%d (%d)",
                 this.getRarity(),
                 this.getName(),
                 this.weaponType,
