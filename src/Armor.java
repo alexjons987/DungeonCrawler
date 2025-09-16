@@ -1,24 +1,31 @@
 public class Armor extends Item {
 
     public enum ArmorType {
-        PLATE("Plate", 3),
-        LEATHER("Leather", 2),
-        CLOTH("Cloth", 1);
+        PLATE("Plate", 3, 1),
+        LEATHER("Leather", 2, 1),
+        CLOTH("Cloth", 1, 1),
+        ACCESSORY("Accessory", 0, 1);
 
         private final String displayName;
-        private final int scaling;
+        private final int armorScaling;
+        private final int statScaling;
 
-        ArmorType(String displayName, int scaling) {
+        ArmorType(String displayName, int armorScaling, int statScaling) {
             this.displayName = displayName;
-            this.scaling = scaling;
+            this.armorScaling = armorScaling;
+            this.statScaling = statScaling;
         }
 
         public String getDisplayName() {
             return this.displayName;
         }
 
-        public int getScaling() {
-            return this.scaling;
+        public int getArmorScaling() {
+            return this.armorScaling;
+        }
+
+        public int getStatScaling() {
+            return this.statScaling;
         }
     }
 
@@ -52,7 +59,7 @@ public class Armor extends Item {
         super(name, rarity);
         this.armorType = armorType;
         this.armorEquipRegion = armorEquipRegion;
-        this.baseArmorRating = baseArmorRating + (armorType.getScaling() * rarity.getStatMultiplier());
+        this.baseArmorRating = baseArmorRating + (armorType.getArmorScaling() * rarity.getStatMultiplier());
         this.stats = new Stats(strength, vigor, agility, dexterity, will, knowledge, resourcefulness);
     }
 
