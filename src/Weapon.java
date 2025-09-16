@@ -101,7 +101,7 @@ public class Weapon extends Item {
 
     public String toString() {
         return String.format(
-                "[%s] %s (%s) (%s) - %d+%d (%d)",
+                "[%s] %s (%s) (%s) - %d+%d (%dt)",
                 this.getRarity(),
                 this.getName(),
                 this.weaponType,

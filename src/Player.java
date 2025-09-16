@@ -239,6 +239,15 @@ public class Player {
 
     // To String
     public String toStringEquipped() {
+
+        String mhStr = this.equippedMainHand == null ? "None" : this.equippedMainHand.toString();
+        String ohStr = this.equippedOffHand == null ? "None" : this.equippedOffHand.toString();
+
+        if (this.equippedMainHand != null && this.equippedMainHand.getHandType() == Weapon.HandType.TWO_HANDED) {
+            mhStr = this.equippedMainHand.toString();
+            ohStr = "[BLOCKED - USED BY 2H]";
+        }
+
         return String.format(
             "Head: %s%n" +
             "Chest: %s%n" +
@@ -256,8 +265,8 @@ public class Player {
             this.equippedFeet == null ? "None" : this.equippedFeet.toString(),
             this.equippedNecklace == null ? "None" : this.equippedNecklace.toString(),
             this.equippedRing == null ? "None" : this.equippedRing.toString(),
-            this.equippedMainHand == null ? "None" : this.equippedMainHand.toString(),
-            this.equippedOffHand == null ? "None" : this.equippedOffHand.toString()
+            mhStr,
+            ohStr
         );
     }
 

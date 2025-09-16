@@ -33,20 +33,16 @@ public class DungeonCrawler {
         switch (classChoice) {
             case 1:
                 this.player = new Player(15, 15, 15, 15, 15, 15, 15);
-                System.out.println("- Your base stats -");
-                System.out.println(this.player.toStringStats());
                 break;
             case 2:
                 this.player = new Player(20, 25, 13, 12, 18, 5, 12);
-                System.out.println("- Your base stats -");
-                System.out.println(this.player.toStringStats());
                 break;
             case 3:
                 this.player = new Player(9, 6, 25, 20, 10, 10, 25);
-                System.out.println("- Your base stats -");
-                System.out.println(this.player.toStringStats());
                 break;
         }
+        System.out.println("- Your base stats -");
+        System.out.println(this.player.toStringStats());
 
         // Select dungeon
         int dungeonChoice;
