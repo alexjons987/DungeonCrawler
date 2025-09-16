@@ -175,9 +175,23 @@ public class Dungeon {
         return new Weapon(randomWeapon);
     }
 
+    public Weapon generateRandomDungeonWeapon(Item.Rarity rarity) {
+        Random random = new Random();
+        Weapon randomWeapon = this.dungeonWeapons.get(random.nextInt(0, this.dungeonWeapons.size()));
+        randomWeapon.increaseRarity(rarity);
+        return new Weapon(randomWeapon);
+    }
+
     public Armor generateRandomDungeonArmor() {
         Random random = new Random();
         Armor randomArmor = this.dungeonArmor.get(random.nextInt(0, this.dungeonArmor.size()));
+        return new Armor(randomArmor);
+    }
+
+    public Armor generateRandomDungeonArmor(Item.Rarity rarity) {
+        Random random = new Random();
+        Armor randomArmor = this.dungeonArmor.get(random.nextInt(0, this.dungeonArmor.size()));
+        randomArmor.increaseRarity(rarity);
         return new Armor(randomArmor);
     }
 

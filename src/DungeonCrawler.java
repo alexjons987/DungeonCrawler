@@ -17,92 +17,43 @@ public class DungeonCrawler {
     private void initGame() {
         Scanner scanner = new Scanner(System.in);
 
-        // Welcome to DungeonCrawler
-        System.out.println("Welcome to DungeonCrawler!");
+        DungeonCrawlerUI.printTitle();
 
         // Select class
-        int classChoice;
-        do {
-            System.out.println("\n- Select a class -");
-            System.out.println("1. Fighter - All-around balanced class.");
-            System.out.println("2. Barbarian - Tanky frontliner, but less handy with loot.");
-            System.out.println("3. Rogue - Agile but less tanky class.");
-            System.out.print("> ");
-        } while ((classChoice = scanner.nextInt()) < 0 || classChoice > 3);
-
-        switch (classChoice) {
-            case 1:
-                this.player = new Player(15, 15, 15, 15, 15, 15, 15);
-                break;
-            case 2:
-                this.player = new Player(20, 25, 13, 12, 18, 5, 12);
-                break;
-            case 3:
-                this.player = new Player(9, 6, 25, 20, 10, 10, 25);
-                break;
-        }
+        this.player = DungeonCrawlerUI.selectClass(scanner);
         System.out.println("- Your base stats -");
         System.out.println(this.player.toStringStats());
 
         // Select dungeon
-        int dungeonChoice;
-        do {
-            System.out.println("\n- Select a dungeon -");
-            System.out.println("1. Ruins of the Forgotten Castle");
-            System.out.println("2. Crypts of the Forgotten Castle [UNAVAILABLE]");
-            System.out.println("3. Inferno [UNAVAILABLE]");
-            System.out.print("> ");
-        } while ((dungeonChoice = scanner.nextInt()) < 0 || dungeonChoice > 1);
-
-        switch (dungeonChoice) {
-            case 1:
-                this.dungeon = new Dungeon(Dungeon.DungeonPreset.RUINS);
-                break;
-            case 2:
-                this.dungeon = new Dungeon(Dungeon.DungeonPreset.CRYPTS);
-                break;
-            case 3:
-                this.dungeon = new Dungeon(Dungeon.DungeonPreset.INFERNO);
-                break;
-        }
+        this.dungeon = DungeonCrawlerUI.selectDungeon(scanner);
         System.out.printf("Generated %s%n%n", this.dungeon.toString());
-        System.out.println("You wake up. It being dark and unsure of your whereabouts, you scramble and quickly grab what you find...");
+
+        // Game intro
+        System.out.println("You wake up. It being dark and unsure of your whereabouts, you scramble and quickly move on...");
+
+        // TODO: Remove and replace with an initial loot room sequence
         // Give three random [POOR] armor items
-        Armor itemA = this.dungeon.generateRandomDungeonArmor();
-        Armor itemB = this.dungeon.generateRandomDungeonArmor();
-        Armor itemC = this.dungeon.generateRandomDungeonArmor();
-        this.player.addItemToInventory(itemA);
-        this.player.addItemToInventory(itemB);
-        this.player.addItemToInventory(itemC);
+        for (int i = 0; i < 3; i++)
+            this.player.addItemToInventory(this.dungeon.generateRandomDungeonArmor(Item.Rarity.UNIQUE));
 
         // Give player one random [POOR] weapon
-        Weapon weapon = this.dungeon.generateRandomDungeonWeapon();
+        Weapon weapon = this.dungeon.generateRandomDungeonWeapon(Item.Rarity.POOR);
         this.player.addItemToInventory(weapon);
 
-        System.out.printf("%nInventory (%d):%n", this.player.getInventory().size());
-        this.player.showInventory();
+        // System.out.printf("%nInventory (%d):%n", this.player.getInventory().size());
+        // this.player.showInventory();
 
-        System.out.println("\nTrying to equip: " + itemA.toStringShort());
-        this.player.equipArmor(itemA);
-        System.out.println("Trying to equip: " + itemB.toStringShort());
-        this.player.equipArmor(itemB);
-        System.out.println("Trying to equip: " + itemC.toStringShort());
-        this.player.equipArmor(itemC);
-        System.out.println("Trying to equip: " + weapon.toStringShort());
-        this.player.equipWeapon(weapon);
-
-        System.out.println("\nInventory after equipping:");
-        this.player.showInventory();
-
-        System.out.println("\n- Full player info -");
-        System.out.println(this.player.toString());
+        // System.out.println("\n- Full player info -");
+        // System.out.println(this.player.toString());
 
         mainGameLoop();
     }
 
     private void mainGameLoop() {
+        int moduleCounter = 1;
+        preAdventureRest();
 
-        // You take a minute to rest
+        // Module 1 always "rest/loot"
         // 1. Go deeper into the dungeon
         // 2. Examine yourself (Show stats)
         // 3. Open your backpack (Show all items and their stats)
@@ -113,6 +64,25 @@ public class DungeonCrawler {
         //      4b. Pray
 
 
-        // while (!gameOver) {}
+        while (!gameOver) {
+            combatEncounter();
+
+
+        }
+    }
+
+    // TODO: Implement
+    private void preAdventureRest() {
+
+    }
+
+    // TODO: Implement
+    private void combatEncounter() {
+
+    }
+
+    // TODO: Implement
+    private void postCombat() {
+
     }
 }
