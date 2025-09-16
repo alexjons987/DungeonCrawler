@@ -92,11 +92,11 @@ public class Stats {
     }
 
     public int getMaxHP() {
-        return (int) ((float) ((float) this.strength * 0.25f + (float) this.vigor * 0.75f) * 2) + 70;
+        return (int) ((float) this.strength * 0.25f + (float) this.vigor * 0.75f) * 2 + 70;
     }
 
     public float getActionSpeed() {
         float actionSpeed = (this.agility * 0.25f + this.dexterity * 0.75f) / 15.0f;
-        return (float) Math.pow(actionSpeed, 2) - 1.0f; // Scale action speed quadtraticly
+        return (float) Math.pow(actionSpeed, 2) - 1.0f; // Scale action speed quadratically
     }
 }

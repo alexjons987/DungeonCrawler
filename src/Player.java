@@ -146,7 +146,9 @@ public class Player {
 
     // TODO: Combine add/remove stats to one func
     private void addStatsFromArmor(Armor armor) {
+
         Stats armorStats = armor.getStats();
+        float currHealthPerc = getHealthPercentage();
 
         int armorStrength = armorStats.getStrength();
         int armorVigor = armorStats.getVigor();
@@ -164,6 +166,10 @@ public class Player {
         this.stats.setKnowledge(this.stats.getKnowledge() + armorKnowledge);
         this.stats.setResourcefulness(this.stats.getResourcefulness() + armorResourcefulness);
 
+        // Update new health accordingly
+        float newCurrHealth = this.stats.getMaxHP() * currHealthPerc;
+        this.health = (int) newCurrHealth;
+
         for (int n : new int[]{ armorStrength, armorVigor, armorAgility, armorDexterity, armorWill, armorKnowledge, armorResourcefulness }) {
             System.out.printf("%d ", n);
         }
@@ -171,7 +177,9 @@ public class Player {
     }
 
     private void removeStatsFromArmor(Armor armor) {
+
         Stats armorStats = armor.getStats();
+        float currHealthPerc = getHealthPercentage();
 
         int armorStrength = armorStats.getStrength() * -1;
         int armorVigor = armorStats.getVigor() * -1;
@@ -188,6 +196,10 @@ public class Player {
         this.stats.setWill(this.stats.getWill() + armorWill);
         this.stats.setKnowledge(this.stats.getKnowledge() + armorKnowledge);
         this.stats.setResourcefulness(this.stats.getResourcefulness() + armorResourcefulness);
+
+        // Update new health accordingly
+        float newCurrHealth = this.stats.getMaxHP() * currHealthPerc;
+        this.health = (int) newCurrHealth;
 
         for (int n : new int[]{ armorStrength, armorVigor, armorAgility, armorDexterity, armorWill, armorKnowledge, armorResourcefulness }) {
             System.out.printf("%d ", n);
