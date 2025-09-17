@@ -75,6 +75,14 @@ public class Player {
     }
 
     // Funcs
+    public String getInventoryString() {
+        StringBuilder inventorySB = new StringBuilder();
+        for (Item item : this.inventory)
+            inventorySB.append(item.toString()).append("\n");
+
+        return inventorySB.toString();
+    }
+
     public void equipArmor(Armor armor) {
 
         switch (armor.getArmorEquipRegion()) {
@@ -217,12 +225,28 @@ public class Player {
         }
 
         switch (weapon.getHandType()) {
-            case Weapon.HandType.TWO_HANDED:
-            case Weapon.HandType.MAIN_HAND:
+            case Weapon.HandType.TWO_HANDED: // Unequip current MH + OH
+                if (this.equippedMainHand != null) {
+                    this.inventory.add(this.equippedMainHand);
+                }
+                if (this.equippedOffHand != null) {
+                    this.inventory.add(this.equippedOffHand);
+                }
                 this.equippedMainHand = weapon;
+                this.inventory.remove(weapon);
+            case Weapon.HandType.MAIN_HAND: // Unequip current MH
+                if (this.equippedMainHand != null) {
+                    this.inventory.add(this.equippedMainHand);
+                }
+                this.equippedMainHand = weapon;
+                this.inventory.remove(weapon);
                 break;
-            case Weapon.HandType.OFF_HAND:
+            case Weapon.HandType.OFF_HAND: // Unequip current OH
+                if (this.equippedOffHand != null) {
+                    this.inventory.add(this.equippedOffHand);
+                }
                 this.equippedOffHand = weapon;
+                this.inventory.remove(weapon);
                 break;
         }
     }
