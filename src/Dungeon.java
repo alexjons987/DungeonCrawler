@@ -17,7 +17,7 @@ public class Dungeon {
     private String displayName;
     private ArrayList<Weapon> dungeonWeapons;
     private ArrayList<Armor> dungeonArmor;
-    private ArrayList<Item> dungeonItems; // Items is a combination of both weapons and armor
+    private ArrayList<Item> dungeonItems; // Items is a combination of both weapons and armor // TODO: RETURN TO PRIVATE
     private ArrayList<Mob> mobs;
     private ArrayList<Chest> chests;
 
@@ -59,6 +59,7 @@ public class Dungeon {
         }
     }
 
+    // TODO: Fix so func does not alter other lists other than returned list
     private ArrayList<Item> generateStandardItemSet() throws IOException {
 
         ArrayList<Item> itemList = new ArrayList<Item>();
@@ -70,7 +71,7 @@ public class Dungeon {
             JSONObject weapon = (JSONObject) obj;
 
             String weaponName = weapon.getString("name");
-            Item.Rarity weaponRarity = weapon.getEnum(Item.Rarity.class, "rarity");
+            Item.Rarity weaponRarity = Item.Rarity.POOR; // Default rarity to POOR
             Weapon.WeaponType weaponType = weapon.getEnum(Weapon.WeaponType.class, "weaponType");
             Weapon.HandType weaponHandType = weapon.getEnum(Weapon.HandType.class, "handType");
             int basePhysDmg = weapon.getInt("basePhysWeaponDmg");
@@ -87,7 +88,7 @@ public class Dungeon {
             JSONObject armor = (JSONObject) obj;
 
             String armorName = armor.getString("name");
-            Item.Rarity armorRarity = armor.getEnum(Item.Rarity.class, "rarity");
+            Item.Rarity armorRarity = Item.Rarity.POOR; // Default rarity to POOR
             Armor.ArmorType armorType = armor.getEnum(Armor.ArmorType.class, "armorType");
             Armor.ArmorEquipRegion armorEquipRegion = armor.getEnum(Armor.ArmorEquipRegion.class, "armorEquipRegion");
             int armorBaseDefense = armor.getInt("baseDefense");
@@ -172,26 +173,30 @@ public class Dungeon {
     public Weapon generateRandomDungeonWeapon() {
         Random random = new Random();
         Weapon randomWeapon = this.dungeonWeapons.get(random.nextInt(0, this.dungeonWeapons.size()));
-        return new Weapon(randomWeapon);
+        Weapon randomWeaponCopy = new Weapon(randomWeapon);
+        return new Weapon(randomWeaponCopy);
     }
 
     public Weapon generateRandomDungeonWeapon(Item.Rarity rarity) {
         Random random = new Random();
         Weapon randomWeapon = this.dungeonWeapons.get(random.nextInt(0, this.dungeonWeapons.size()));
-        randomWeapon.increaseRarity(rarity);
-        return new Weapon(randomWeapon);
+        Weapon randomWeaponCopy = new Weapon(randomWeapon);
+        randomWeaponCopy.increaseRarity(rarity);
+        return new Weapon(randomWeaponCopy);
     }
 
     public Armor generateRandomDungeonArmor() {
         Random random = new Random();
         Armor randomArmor = this.dungeonArmor.get(random.nextInt(0, this.dungeonArmor.size()));
+        Armor randomArmorCopy = new Armor(randomArmor);
         return new Armor(randomArmor);
     }
 
     public Armor generateRandomDungeonArmor(Item.Rarity rarity) {
         Random random = new Random();
         Armor randomArmor = this.dungeonArmor.get(random.nextInt(0, this.dungeonArmor.size()));
-        randomArmor.increaseRarity(rarity);
+        Armor randomArmorCopy = new Armor(randomArmor);
+        randomArmorCopy.increaseRarity(rarity);
         return new Armor(randomArmor);
     }
 
