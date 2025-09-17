@@ -40,40 +40,25 @@ public class DungeonCrawler {
         Weapon weapon = this.dungeon.generateRandomDungeonWeapon(Item.Rarity.POOR);
         this.player.addItemToInventory(weapon);
 
-        // System.out.printf("%nInventory (%d):%n", this.player.getInventory().size());
-        // this.player.showInventory();
-
-        // System.out.println("\n- Full player info -");
-        // System.out.println(this.player.toString());
-
         mainGameLoop();
     }
 
     private void mainGameLoop() {
+        Scanner scanner = new Scanner(System.in);
         int moduleCounter = 1;
-        preAdventureRest();
-
-        // Module 1 always "rest/loot"
-        // 1. Go deeper into the dungeon
-        // 2. Examine yourself (Show stats)
-        // 3. Open your backpack (Show all items and their stats)
-        //      3a. Equip an item
-        //      3b. Close your backpack
-        // 4. Rest
-        //      4a. Light a campfire
-        //      4b. Pray
+        preAdventureRest(scanner);
 
 
-        while (!gameOver) {
-            combatEncounter();
 
 
-        }
+        // while (!gameOver) {
+        //     combatEncounter();
+        // }
     }
 
     // TODO: Implement
-    private void preAdventureRest() {
-
+    private void preAdventureRest(Scanner scanner) {
+        DungeonCrawlerUI.playerMenu(scanner, this.player, this.dungeon);
     }
 
     // TODO: Implement

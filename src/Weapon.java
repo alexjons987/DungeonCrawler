@@ -52,16 +52,14 @@ public class Weapon extends Item {
         this.weaponType = weapon.weaponType;
         this.handType = weapon.handType;
         this.basePhysWeaponDmg = weapon.basePhysWeaponDmg;
-        if (weapon.baseMagWeaponDmg > 0)
-            this.baseMagWeaponDmg = weapon.baseMagWeaponDmg + (weapon.weaponType.getScaling() * weapon.getRarity().getStatMultiplier());
-        else
-            this.baseMagWeaponDmg = 0;
+        this.baseMagWeaponDmg = weapon.baseMagWeaponDmg;
         this.attackTimer = 44 * (weapon.basePhysWeaponDmg + weapon.baseMagWeaponDmg);
     }
 
     public void increaseRarity(Rarity rarity) {
         super.increaseRarity(rarity);
-        this.basePhysWeaponDmg = basePhysWeaponDmg + (weaponType.getScaling() * rarity.getStatMultiplier()); // Re-calculate weapone damage
+
+        this.basePhysWeaponDmg = basePhysWeaponDmg + (weaponType.getScaling() * rarity.getStatMultiplier()); // Re-calculate weapon damage
         if (this.baseMagWeaponDmg > 0)
             this.baseMagWeaponDmg = baseMagWeaponDmg + (weaponType.getScaling() * rarity.getStatMultiplier());
         else
@@ -77,16 +75,11 @@ public class Weapon extends Item {
     }
 
     private String getHandTypeString() {
-        switch (this.handType) {
-            case TWO_HANDED:
-                return "2H";
-            case MAIN_HAND:
-                return "MH";
-            case OFF_HAND:
-                return "OH";
-            default:
-                throw new IllegalArgumentException(String.format("Unknown HandType given for getHandTypeString(): %s", this.handType));
-        }
+        return switch (this.handType) {
+            case TWO_HANDED -> "2H";
+            case MAIN_HAND -> "MH";
+            case OFF_HAND -> "OH";
+        };
     }
 
     public String toStringShort() {
