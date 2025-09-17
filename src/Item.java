@@ -36,7 +36,7 @@ public abstract class Item {
         }
     }
 
-    private String name;
+    private final String name;
     private Rarity rarity;
 
     public Item(String name, Rarity rarity) {
@@ -55,10 +55,12 @@ public abstract class Item {
 
     public void increaseRarity(Rarity rarity) {
         if (this.rarity != Rarity.POOR) {
-            throw new IllegalArgumentException("Cannot increase rarity on item, only items of POOR rarity is allowed.");
+            throw new IllegalArgumentException(
+                    String.format("Cannot increase rarity on item %s (%s), only items of POOR rarity is allowed.", this.name, this.rarity)
+            );
         } else if (this.rarity.getStatMultiplier() > rarity.getStatMultiplier()) {
             throw new IllegalArgumentException(
-                    String.format("(%s > %s) -> FALSE - Given rarity is not greater than current rarity!", this.rarity.toString(), rarity.toString())
+                    String.format("(%s > %s) -> FALSE! Given rarity is not greater than current rarity!", this.rarity.toString(), rarity.toString())
             );
         }
         this.rarity = rarity;
