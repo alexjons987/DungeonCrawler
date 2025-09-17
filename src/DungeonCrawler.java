@@ -3,8 +3,8 @@ import java.util.Scanner;
 public class DungeonCrawler {
     private boolean gameOver = false;
     private Player player;
-    private Mob mob;
     private Dungeon dungeon;
+    private Module module;
 
     public void startGame() {
         initGame();

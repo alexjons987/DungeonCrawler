@@ -14,42 +14,42 @@ public class Dungeon {
         INFERNO
     }
 
-    private String displayName;
-    private ArrayList<Weapon> dungeonWeapons;
-    private ArrayList<Armor> dungeonArmor;
-    private ArrayList<Item> dungeonItems; // Items is a combination of both weapons and armor // TODO: RETURN TO PRIVATE
-    private ArrayList<Mob> mobs;
-    private ArrayList<Chest> chests;
+    private String dungeonDisplayName;
+    private ArrayList<Weapon> dungeonWeaponSet;
+    private ArrayList<Armor> dungeonArmorSet;
+    private ArrayList<Item> dungeonItemSet; // Items is a combination of both weapons and armor
+    private ArrayList<Mob> dungeonMobSet;
+    private ArrayList<Module> dungeonModules; // Modules are dungeon rooms/areas
 
     // Altars?
 
     public Dungeon(DungeonPreset preset) {
 
-        this.dungeonWeapons = new ArrayList<Weapon>();
-        this.dungeonArmor = new ArrayList<Armor>();
-        this.dungeonItems = new ArrayList<Item>();
-        this.mobs = new ArrayList<Mob>();
-        this.chests = new ArrayList<Chest>();
+        this.dungeonWeaponSet = new ArrayList<Weapon>();
+        this.dungeonArmorSet = new ArrayList<Armor>();
+        this.dungeonItemSet = new ArrayList<Item>();
+        this.dungeonMobSet = new ArrayList<Mob>();
+        this.dungeonModules = new ArrayList<Module>();
 
         switch (preset) {
             case RUINS:
-                this.displayName = "Ruins of the Forgotten Castle";
+                this.dungeonDisplayName = "Ruins of the Forgotten Castle";
                 try {
                     // Items
-                    this.dungeonItems = generateStandardItemSet();
+                    this.dungeonItemSet = generateStandardItemSet();
                     // Mobs
-                    this.mobs = generateMobSet(preset);
-                    // Chests
-                    this.chests = new ArrayList<Chest>(); // TODO: Add generateChestSet()
+                    this.dungeonMobSet = generateMobSet(preset);
+                    // Modules
+                    this.dungeonModules = generateDungeonModules(10);
                 } catch (Exception e) {
                     System.out.println("Unable to generate Dungeon content: " + e);
                 }
                 break;
             case CRYPTS:
-                this.displayName = "Crypts";
+                this.dungeonDisplayName = "Crypts";
                 break;
             case INFERNO:
-                this.displayName = "Inferno";
+                this.dungeonDisplayName = "Inferno";
                 // this.items.addAll(generateArtifactItemSet());
                 break;
             default:
@@ -79,7 +79,7 @@ public class Dungeon {
 
             Weapon generatedWeapon = new Weapon(weaponName, weaponRarity, weaponType, weaponHandType,
                     basePhysDmg, baseMagDmg);
-            this.dungeonWeapons.add(generatedWeapon);
+            this.dungeonWeaponSet.add(generatedWeapon);
             itemList.add(generatedWeapon);
         }
 
@@ -102,7 +102,7 @@ public class Dungeon {
 
             Armor generatedArmor = new Armor(armorName, armorRarity, armorType, armorEquipRegion,
                     armorBaseDefense, strength, vigor, agility, dexterity, will, knowledge, resourcefulness);
-            this.dungeonArmor.add(generatedArmor);
+            this.dungeonArmorSet.add(generatedArmor);
             itemList.add(generatedArmor);
         }
 
@@ -141,10 +141,10 @@ public class Dungeon {
                 }
                 break;
             case CRYPTS:
-                this.displayName = "Crypts";
+                this.dungeonDisplayName = "Crypts";
                 break;
             case INFERNO:
-                this.displayName = "Inferno";
+                this.dungeonDisplayName = "Inferno";
                 break;
             default:
                 throw new IllegalArgumentException(
@@ -154,14 +154,36 @@ public class Dungeon {
         throw new IllegalStateException("Fell out of switch-case -> generateMobSet()");
     }
 
-    // TODO: Implement generateChestSet()
-    private ArrayList<Chest> generateChestSet(DungeonPreset preset) {
-        return new ArrayList<Chest>();
+    private ArrayList<Module> generateDungeonModules(int moduleCount) { // Unfinished function
+
+        Random random = new Random();
+        ArrayList<Module> modules = new ArrayList<Module>();
+
+        for (int i = 0; i < moduleCount; i++) {
+
+            // Pick a random mob
+            Mob mob = new Mob(dungeonMobSet.get(random.nextInt(0, dungeonMobSet.size())));
+
+            // Add random chests
+            int chestsToAdd = random.nextInt(1, 4 + 1);
+            ArrayList<Chest> chests = new ArrayList<Chest>();
+            for (int j = 0; j < chestsToAdd; j++) {
+                chests.add(new Chest(this.dungeonItemSet));
+            }
+
+            // Create new Module
+            Module module = new Module(mob, chests);
+
+            // Add to modules list
+            modules.add(module);
+        }
+
+        return modules;
     }
 
     public Item generateRandomDungeonItem() {
         Random random = new Random();
-        Item randomItem = this.dungeonItems.get(random.nextInt(0, this.dungeonItems.size()));
+        Item randomItem = this.dungeonItemSet.get(random.nextInt(0, this.dungeonItemSet.size()));
         if (randomItem.getClass() == Armor.class)
             return new Armor((Armor) randomItem);
         else if (randomItem.getClass() == Weapon.class)
@@ -172,14 +194,14 @@ public class Dungeon {
 
     public Weapon generateRandomDungeonWeapon() {
         Random random = new Random();
-        Weapon randomWeapon = this.dungeonWeapons.get(random.nextInt(0, this.dungeonWeapons.size()));
+        Weapon randomWeapon = this.dungeonWeaponSet.get(random.nextInt(0, this.dungeonWeaponSet.size()));
         Weapon randomWeaponCopy = new Weapon(randomWeapon);
         return new Weapon(randomWeaponCopy);
     }
 
     public Weapon generateRandomDungeonWeapon(Item.Rarity rarity) {
         Random random = new Random();
-        Weapon randomWeapon = this.dungeonWeapons.get(random.nextInt(0, this.dungeonWeapons.size()));
+        Weapon randomWeapon = this.dungeonWeaponSet.get(random.nextInt(0, this.dungeonWeaponSet.size()));
         Weapon randomWeaponCopy = new Weapon(randomWeapon);
         randomWeaponCopy.increaseRarity(rarity);
         return new Weapon(randomWeaponCopy);
@@ -187,22 +209,27 @@ public class Dungeon {
 
     public Armor generateRandomDungeonArmor() {
         Random random = new Random();
-        Armor randomArmor = this.dungeonArmor.get(random.nextInt(0, this.dungeonArmor.size()));
+        Armor randomArmor = this.dungeonArmorSet.get(random.nextInt(0, this.dungeonArmorSet.size()));
         Armor randomArmorCopy = new Armor(randomArmor);
         return new Armor(randomArmor);
     }
 
     public Armor generateRandomDungeonArmor(Item.Rarity rarity) {
         Random random = new Random();
-        Armor randomArmor = this.dungeonArmor.get(random.nextInt(0, this.dungeonArmor.size()));
+        Armor randomArmor = this.dungeonArmorSet.get(random.nextInt(0, this.dungeonArmorSet.size()));
         Armor randomArmorCopy = new Armor(randomArmor);
         randomArmorCopy.increaseRarity(rarity);
         return new Armor(randomArmor);
     }
 
-
     public String toString() {
-        return String.format("\"%s\" with %d possible items, %d different mobs and %d chest types.", this.displayName, this.dungeonItems.size(), this.mobs.size(), this.chests.size());
+        return String.format(
+                "\"%s\" with %d modules containing %d possible items, %d possible mobs",
+                this.dungeonDisplayName,
+                this.dungeonModules.size(),
+                this.dungeonItemSet.size(),
+                this.dungeonMobSet.size()
+        );
     }
 }
 

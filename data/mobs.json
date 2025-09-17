@@ -5,7 +5,7 @@
       "tier": "NORMAL",
       "health": 152,
       "damage": 40,
-      "attackTimer": 3.75,
+      "attackTimer": 3750,
       "hitRate": 0.9
     },
     {
@@ -13,7 +13,7 @@
       "tier": "NORMAL",
       "health": 150,
       "damage": 40,
-      "attackTimer": 1.0,
+      "attackTimer": 1000,
       "hitRate": 0.9
     }
   ],

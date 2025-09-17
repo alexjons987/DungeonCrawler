@@ -30,4 +30,13 @@ public class Mob {
         this.attackTimer = attackTimer;
         this.hitRate = hitRate;
     }
+
+    public Mob(Mob mob) {
+        this.name = mob.name;
+        this.mobTier = mob.mobTier;
+        this.health = mob.health;
+        this.damage = mob.damage;
+        this.attackTimer = mob.attackTimer;
+        this.hitRate = mob.hitRate;
+    }
 }

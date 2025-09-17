@@ -22,6 +22,10 @@ public abstract class Item {
             return this.statMultiplier;
         }
 
+        public static Rarity[] getAllRarities() {
+            return Rarity.values();
+        }
+
         public String toString() {
             return switch (this) {
                 case Rarity.POOR -> "Poor";
@@ -70,13 +74,13 @@ public abstract class Item {
         return this.rarity;
     }
 
+
+
     public Rarity getRandomRarity(Rarity lowesRarity, Rarity highestRarity) {
         int lowest = lowesRarity.getStatMultiplier();
         int highest = highestRarity.getStatMultiplier();
         if (lowest > highest) {
-            throw new IllegalArgumentException(
-                    String.format("Lowest rarity cannot be a greater rarity than highest rarity")
-            );
+            throw new IllegalArgumentException("Lowest rarity cannot be a greater rarity than highest rarity");
         }
 
         Random random = new Random();
