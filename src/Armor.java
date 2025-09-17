@@ -136,20 +136,13 @@ public class Armor extends Item {
         int knw = this.stats.getKnowledge();
         int res = this.stats.getResourcefulness();
 
-        if (str != 0)
-            sb.append(" / STR: +" + str);
-        if (vig != 0)
-            sb.append(" / VIG: +" + vig);
-        if (agi != 0)
-            sb.append(" / AGI: +" + agi);
-        if (dex != 0)
-            sb.append(" / DEX: +" + dex);
-        if (wil != 0)
-            sb.append(" / WIL: +" + wil);
-        if (knw != 0)
-            sb.append(" / KNW: +" + knw);
-        if (res != 0)
-            sb.append(" / RES: +" + res);
+        if (str != 0) sb.append(String.format(" / STR: %+d", str));
+        if (vig != 0) sb.append(String.format(" / VIG: %+d", vig));
+        if (agi != 0) sb.append(String.format(" / AGI: %+d", agi));
+        if (dex != 0) sb.append(String.format(" / DEX: %+d", dex));
+        if (wil != 0) sb.append(String.format(" / WIL: %+d", wil));
+        if (knw != 0) sb.append(String.format(" / KNW: %+d", knw));
+        if (res != 0) sb.append(String.format(" / RES: %+d", res));
 
         return sb.toString();
     }

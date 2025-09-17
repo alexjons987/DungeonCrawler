@@ -34,26 +34,18 @@ public class DungeonCrawler {
         // TODO: Remove and replace with an initial loot room sequence
         // Give three random [POOR] armor items
         for (int i = 0; i < 3; i++)
-            this.player.addItemToInventory(this.dungeon.generateRandomDungeonArmor(Item.Rarity.UNIQUE));
+            this.player.addItemToInventory(this.dungeon.generateRandomDungeonArmor());
 
         // Give player one random [POOR] weapon
         Weapon weapon = this.dungeon.generateRandomDungeonWeapon(Item.Rarity.POOR);
-        this.player.addItemToInventory(weapon);
-
-        mainGameLoop();
+        player.equipWeapon(weapon);
+        System.out.printf("You equipped %s%n", weapon.toString());
     }
 
     private void mainGameLoop() {
         Scanner scanner = new Scanner(System.in);
         int moduleCounter = 1;
         preAdventureRest(scanner);
-
-
-
-
-        // while (!gameOver) {
-        //     combatEncounter();
-        // }
     }
 
     // TODO: Implement
