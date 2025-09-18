@@ -9,10 +9,6 @@ public class Attributes {
     private int knowledge;
     private int resourcefulness;
 
-    public Attributes() {
-        
-    }
-
     public Attributes(int strength, int vigor, int agility, int dexterity, int will, int knowledge, int resourcefulness) {
         this.strength = strength;
         this.vigor = vigor;
@@ -21,6 +17,16 @@ public class Attributes {
         this.will = will;
         this.knowledge = knowledge;
         this.resourcefulness = resourcefulness;
+    }
+
+    public Attributes(Attributes attributes) {
+        this.strength = attributes.strength;
+        this.vigor = attributes.vigor;
+        this.agility = attributes.agility;
+        this.dexterity = attributes.dexterity;
+        this.will = attributes.will;
+        this.knowledge = attributes.knowledge;
+        this.resourcefulness = attributes.resourcefulness;
     }
 
     public int getStrength() {
@@ -80,7 +86,7 @@ public class Attributes {
     }
 
     public HashMap<String, Integer> getAllAttributes() {
-        HashMap<String, Integer> hmStats = new HashMap<String, Integer>();
+        HashMap<String, Integer> hmStats = new HashMap<>();
         hmStats.put("strength", this.getStrength());
         hmStats.put("vigor", this.getVigor());
         hmStats.put("agility", this.getAgility());

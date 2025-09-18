@@ -70,7 +70,7 @@ public class Armor extends Item {
         this.armorType = armor.armorType;
         this.armorEquipRegion = armor.armorEquipRegion;
         this.armorRating = armor.armorRating;
-        this.attributes = armor.attributes;
+        this.attributes = new Attributes(armor.attributes);
     }
 
     public ArmorType getArmorType() {

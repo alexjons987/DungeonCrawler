@@ -30,12 +30,12 @@ public class Chest {
             case 4:
                 this.name = "Lion's Head Chest"; // Rare - Unique
                 this.cost = 10;
-                this.item = rollItem(itemTemplates, 0, 0, 0, 150, 135, 95, 20, 0);
+                this.item = rollItem(itemTemplates, 0, 0, 0, 200, 125, 60, 20, 0);
                 break;
             case 5:
                 this.name = "Golden Chest"; // Epic - Unique
                 this.cost = 15;
-                this.item = rollItem(itemTemplates, 0, 0, 0, 0, 200, 150, 40, 0);
+                this.item = rollItem(itemTemplates, 0, 0, 0, 0, 200, 100, 35, 0);
                 break;
         }
     }
@@ -120,6 +120,7 @@ public class Chest {
             default -> throw new IllegalStateException("Unexpected item: " + randomItem);
         };
         randomItemCopy.increaseRarity(winningRarity);
+        System.out.printf("Chose %s and generated %s%n", randomItem, randomItemCopy);
 
         return randomItemCopy;
     }
