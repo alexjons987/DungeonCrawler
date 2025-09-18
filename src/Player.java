@@ -2,10 +2,6 @@ import java.util.ArrayList;
 
 public class Player {
 
-    public enum PlayerRace {
-
-    }
-
     private boolean isAlive = true;
     private final Attributes attributes;
     private int health;
@@ -32,7 +28,7 @@ public class Player {
     public Player(int strength, int vigor, int agility, int dexterity, int will, int knowledge, int resourcefulness) {
         this.attributes = new Attributes(strength, vigor, agility, dexterity, will, knowledge, resourcefulness);
         this.health = this.attributes.getMaxHP();
-        this.inventory = new ArrayList<Item>();
+        this.inventory = new ArrayList<>();
         this.equippedHead = null;
         this.equippedChest = null;
         this.equippedLegs = null;
@@ -380,8 +376,8 @@ public class Player {
     }
 
     // TODO: Make attributes (will/knowledge) increase/decrease effectiveness of abilities/perks
-    // TODO: Abilites
-    // Blood Exchange (Campfire to refresh) - When your health drops below 30%, gain +40% lifesteal for your 12 next attacks.
+    // TODO: Abilities
+    // Blood Exchange (Campfire to refresh) - When your health drops below 30%, gain +40% life steal for your 12 next attacks.
     // War Cry (Campfire to refresh) - When your health drops below 50%, gain +25% max health bonus for the rest of the combat encounter (current health scales accordingly).
     // Divine Protection (Pray to refresh) - At the start of the combat encounter, receive the blessing of the divine and gain +30% physical damage reduction for the 6 next incoming attacks.
 
@@ -398,7 +394,6 @@ public class Player {
     // Poisoned Daggers  - While using a Dagger-type weapon, deal an additional 4 magic damage.
     // Ambush - When entering a combat encounter, gain +100% Action Speed and +25% physical damage bonus for your first attack.'
     // Dagger Mastery - While using a Dagger-type weapon, gain +2 weapon damage.
-    // Traps and Locks - You can unlock locked chests without lockpicks.
     // Fermata - Gain +5 Resourcefulness.
     // Rapier Mastery - When a rapier is equipped, gain +2 weapon damage and 5% action speed.
     // Story Teller - Gain +3 Will and +3 Knowledge.

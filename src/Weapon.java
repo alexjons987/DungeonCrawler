@@ -76,7 +76,6 @@ public class Weapon extends Item {
         return this.attackTimer;
     }
 
-    // Funcs
     public int getBaseATFromHandType(HandType handType) {
         return switch (this.handType) {
             case TWO_HANDED -> 37;

@@ -72,7 +72,6 @@ public class Mob {
         return this.hitRate;
     }
 
-    // Funcs
     public void takeDamage(int damage) {
         this.health -= damage;
         if (this.health <= 0) {

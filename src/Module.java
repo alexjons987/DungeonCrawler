@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 public class Module {
     // TODO: Add module name
-    private Mob mob;
-    private ArrayList<Chest> chests;
+    private final Mob mob;
+    private final ArrayList<Chest> chests;
 
     // Constructors
     public Module(Mob mob, ArrayList<Chest> chests) {
@@ -21,7 +21,7 @@ public class Module {
     }
 
     public ArrayList<Chest> getUnopenedChests() {
-        ArrayList<Chest> unopenedChests = new ArrayList<Chest>();
+        ArrayList<Chest> unopenedChests = new ArrayList<>();
         for (Chest chest : this.chests)
             if (!chest.isLooted())
                 unopenedChests.add(chest);

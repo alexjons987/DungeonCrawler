@@ -64,7 +64,7 @@ public abstract class Item {
             );
         } else if (this.rarity.getStatMultiplier() > rarity.getStatMultiplier()) {
             throw new IllegalArgumentException(
-                    String.format("(%s > %s) -> FALSE! Given rarity is not greater than current rarity!", this.rarity.toString(), rarity.toString())
+                    String.format("(%s > %s) -> FALSE! Given rarity is not greater than current rarity!", this.rarity, rarity)
             );
         }
         this.rarity = rarity;

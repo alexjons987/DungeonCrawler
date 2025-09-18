@@ -3,7 +3,6 @@ import java.util.Scanner;
 public class DungeonCrawler {
     private Player player;
     private Dungeon dungeon;
-    private Module module;
 
     public void startGame() {
         initGame();
@@ -22,7 +21,7 @@ public class DungeonCrawler {
 
         // Select dungeon
         this.dungeon = DungeonCrawlerUI.selectDungeon(scanner);
-        System.out.printf("Generated %s%n%n", this.dungeon.toString());
+        System.out.printf("Generated %s%n%n", this.dungeon);
 
         // Game intro
         System.out.println("You wake up in a dark place. Unsure of your whereabouts, you scramble and quickly move on...");
@@ -30,7 +29,7 @@ public class DungeonCrawler {
         // Give player one random [POOR] weapon
         Weapon weapon = this.dungeon.generateRandomDungeonWeapon(Item.Rarity.POOR);
         player.equipWeapon(weapon);
-        System.out.printf("You equipped %s%n", weapon.toString());
+        System.out.printf("You equipped %s%n", weapon);
     }
 
     private void mainGameLoop() {
@@ -112,12 +111,11 @@ public class DungeonCrawler {
                 if (!usingOffhand && player.getEquippedOffHand() != null) {
                     playerActiveWeapon = player.getEquippedOffHand();
                     usingOffhand = true;
-                    playerWeaponAttackTimer = getEffectiveAttackTimer(playerActiveWeapon, player);
                 } else {
                     playerActiveWeapon = player.getEquippedMainHand();
                     usingOffhand = false;
-                    playerWeaponAttackTimer = getEffectiveAttackTimer(playerActiveWeapon, player);
                 }
+                playerWeaponAttackTimer = getEffectiveAttackTimer(playerActiveWeapon, player);
                 nextPlayerAttackTick += playerWeaponAttackTimer;
             }
             if (mobActionThisTick) {

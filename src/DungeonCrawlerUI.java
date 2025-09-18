@@ -24,8 +24,8 @@ public class DungeonCrawlerUI {
     public static Player selectClass(Scanner scanner) {
         System.out.println("\n- Select a class -");
         System.out.println("1. Fighter - All-around balanced class.");
-        System.out.println("2. Barbarian - Tanky frontliner, but less handy with loot.");
-        System.out.println("3. Rogue - Agile but a less tanky class.");
+        System.out.println("2. Barbarian - Healthy frontliner, but less handy.");
+        System.out.println("3. Rogue - Agile but a less healthy class.");
         System.out.println("4. Custom - Custom class. [UNAVAILABLE]");
 
         int classChoice = readMenuChoice(scanner, 1, 4);
@@ -94,7 +94,7 @@ public class DungeonCrawlerUI {
                 case 2 -> {
                     System.out.println("You examine yourself...");
                     System.out.println("- Your gear/stats -");
-                    System.out.println(player.toString());
+                    System.out.println(player);
                 }
                 case 3 -> backpackMenu(scanner, player);
                 case 4 -> {
@@ -114,6 +114,10 @@ public class DungeonCrawlerUI {
         System.out.println("You open your backpack...");
         while (true) {
             System.out.println("\n- Your backpack -");
+            if (player.getInventory().isEmpty()) {
+                System.out.println("There is nothing in here...");
+                break;
+            }
             for (int i = 0; i < player.getInventory().size(); i++) {
                 System.out.printf("%d. %s%n", i + 1, player.getInventory().get(i).toString());
             }
@@ -126,15 +130,15 @@ public class DungeonCrawlerUI {
                 return;
             }
 
-            if (itemChoice != 0 && itemChoice < player.getInventory().size() + 1) {
+            if (itemChoice < player.getInventory().size() + 1) {
                 Item selectedItem = player.getInventory().get(itemChoice - 1);
 
                 if (selectedItem.getClass() == Armor.class) {
                     player.equipArmor((Armor) selectedItem);
-                    System.out.printf("You equipped %s%n", selectedItem.toString());
+                    System.out.printf("You equipped %s%n", selectedItem);
                 } else if (selectedItem.getClass() == Weapon.class) {
                     player.equipWeapon((Weapon) selectedItem);
-                    System.out.printf("You equipped %s%n", selectedItem.toString());
+                    System.out.printf("You equipped %s%n", selectedItem);
                 }
             }
         }
@@ -142,29 +146,27 @@ public class DungeonCrawlerUI {
 
     // TODO: Implement abilities/perks, campfire/pray resting
     public static boolean playerRestChoice(Scanner scanner, Player player) {
-        while (true) {
-            System.out.println("\n- Select action -");
-            System.out.println("1. Light a campfire");
-            System.out.println("2. Pray");
-            System.out.println("0. Cancel");
+        System.out.println("\n- Select action -");
+        System.out.println("1. Light a campfire");
+        System.out.println("2. Pray");
+        System.out.println("0. Cancel");
 
-            int menuChoice = readMenuChoice(scanner, 1, 2);
+        int menuChoice = readMenuChoice(scanner, 1, 2);
 
-            switch (menuChoice) {
-                case 1 -> {
-                    int playerRes = player.getAttributes().getResourcefulness();
-                    System.out.println("You light a campfire...");
-                    player.heal(playerRes);
-                    System.out.printf("You restore %d health.%n", playerRes);
-                    return true;
-                }
-                case 2 -> {
-                    System.out.println("You begin to pray...");
-                    System.out.println("No one answers... [NOT IMPLEMENTED]");
-                    return false;
-                }
-                default -> throw new IllegalStateException("Fell out of playerRestChoice switch-case.");
+        switch (menuChoice) {
+            case 1 -> {
+                int playerRes = player.getAttributes().getResourcefulness();
+                System.out.println("You light a campfire...");
+                player.heal(playerRes);
+                System.out.printf("You restore %d health.%n", playerRes);
+                return true;
             }
+            case 2 -> {
+                System.out.println("You begin to pray...");
+                System.out.println("No one answers... [NOT IMPLEMENTED]");
+                return false;
+            }
+            default -> throw new IllegalStateException("Fell out of playerRestChoice switch-case.");
         }
     }
 
@@ -201,11 +203,11 @@ public class DungeonCrawlerUI {
                 if (foundItem.getClass() == Armor.class) {
                     Armor foundItemCopy = new Armor((Armor) foundItem);
                     player.getInventory().add(foundItemCopy);
-                    System.out.printf("You found %s%n", foundItem.toString());
+                    System.out.printf("You found %s%n", foundItem);
                 } else if (foundItem.getClass() == Weapon.class) {
                     Weapon foundItemCopy = new Weapon((Weapon) foundItem);
                     player.getInventory().add(foundItemCopy);
-                    System.out.printf("You found %s%n", foundItem.toString());
+                    System.out.printf("You found %s%n", foundItem);
                 }
             }
 

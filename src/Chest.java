@@ -76,7 +76,7 @@ public class Chest {
             int epicTickets,
             int legendaryTickets,
             int uniqueTickets,
-            int artifactTickets
+            int artifactTickets // TODO: Implement Artifacts
     ) {
         int[] weights = {poorTickets, commonTickets, uncommonTickets, rareTickets,
                 epicTickets, legendaryTickets, uniqueTickets, artifactTickets};

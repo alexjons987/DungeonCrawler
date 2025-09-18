@@ -15,8 +15,8 @@ public class Dungeon {
     }
 
     private String dungeonDisplayName;
-    private ArrayList<Weapon> dungeonWeaponTemplates;
-    private ArrayList<Armor> dungeonArmorTemplates;
+    private final ArrayList<Weapon> dungeonWeaponTemplates;
+    private final ArrayList<Armor> dungeonArmorTemplates;
     private ArrayList<Item> dungeonItemTemplates; // Items is a combination of both weapons and armor
     private ArrayList<Mob> dungeonMobTemplates;
     private ArrayList<Module> dungeonModules; // Modules are dungeon rooms/areas
@@ -25,11 +25,11 @@ public class Dungeon {
 
     public Dungeon(DungeonPreset preset) {
 
-        this.dungeonWeaponTemplates = new ArrayList<Weapon>();
-        this.dungeonArmorTemplates = new ArrayList<Armor>();
-        this.dungeonItemTemplates = new ArrayList<Item>();
-        this.dungeonMobTemplates = new ArrayList<Mob>();
-        this.dungeonModules = new ArrayList<Module>();
+        this.dungeonWeaponTemplates = new ArrayList<>();
+        this.dungeonArmorTemplates = new ArrayList<>();
+        this.dungeonItemTemplates = new ArrayList<>();
+        this.dungeonMobTemplates = new ArrayList<>();
+        this.dungeonModules = new ArrayList<>();
 
         switch (preset) {
             case RUINS:
@@ -70,7 +70,7 @@ public class Dungeon {
     // TODO: Fix so func does not alter other lists other than returned list
     private ArrayList<Item> generateStandardItemSet() throws IOException {
 
-        ArrayList<Item> itemList = new ArrayList<Item>();
+        ArrayList<Item> itemList = new ArrayList<>();
 
         String itemDataContent = new String(Files.readAllBytes(Paths.get("data/items.json")));
 
@@ -123,7 +123,7 @@ public class Dungeon {
     }
 
     private ArrayList<Mob> generateMobSet(DungeonPreset preset) throws IOException {
-        ArrayList<Mob> mobList = new ArrayList<Mob>();
+        ArrayList<Mob> mobList = new ArrayList<>();
         String mobContent = new String(Files.readAllBytes(Paths.get("data/mobs.json")));
         switch (preset) {
             case RUINS:
@@ -165,7 +165,7 @@ public class Dungeon {
     private ArrayList<Module> generateDungeonModules(int moduleCount) { // Unfinished function
 
         Random random = new Random();
-        ArrayList<Module> modules = new ArrayList<Module>();
+        ArrayList<Module> modules = new ArrayList<>();
 
         for (int i = 0; i < moduleCount; i++) {
 
@@ -175,7 +175,7 @@ public class Dungeon {
 
             // Add random chests
             int chestsToAdd = random.nextInt(2, 5 + 1);
-            ArrayList<Chest> chests = new ArrayList<Chest>();
+            ArrayList<Chest> chests = new ArrayList<>();
             for (int j = 0; j < chestsToAdd; j++) {
                 chests.add(new Chest(this.dungeonItemTemplates));
             }
@@ -241,14 +241,3 @@ public class Dungeon {
         );
     }
 }
-
-// Name
-// Loot table
-// Loot rarity chances
-
-// Enemies found in dungeon
-// Enemy encounter chances (normal > subboss)
-
-// Chest class
-// chest types in dungeon
-// chest type chances
