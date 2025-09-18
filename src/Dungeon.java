@@ -232,7 +232,7 @@ public class Dungeon {
 
     public String toString() {
         return String.format(
-                "\"%s\" with %d modules containing %d possible items, %d possible mobs",
+                "\"%s\" with %d modules containing %d possible items and %d possible mobs",
                 this.dungeonDisplayName,
                 this.dungeonModules.size(),
                 this.dungeonItemSet.size(),

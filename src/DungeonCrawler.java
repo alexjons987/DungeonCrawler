@@ -11,9 +11,6 @@ public class DungeonCrawler {
         mainGameLoop();
     }
 
-    // Select stats
-    // Random starting weapon, 3 random gear pieces
-    // Enter in-between (0 chests) -> combat -> in-between (0-3 chests)
     private void initGame() {
         Scanner scanner = new Scanner(System.in);
 
@@ -30,11 +27,6 @@ public class DungeonCrawler {
 
         // Game intro
         System.out.println("You wake up in a dark place. Unsure of your whereabouts, you scramble and quickly move on...");
-
-        // TODO: Remove and replace with an initial loot room sequence
-        // Give three random [POOR] armor items
-        // for (int i = 0; i < 3; i++)
-        //     this.player.addItemToInventory(this.dungeon.generateRandomDungeonArmor());
 
         // Give player one random [POOR] weapon
         Weapon weapon = this.dungeon.generateRandomDungeonWeapon(Item.Rarity.POOR);

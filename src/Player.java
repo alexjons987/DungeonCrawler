@@ -152,7 +152,7 @@ public class Player {
         }
     }
 
-    // TODO: Combine add/remove stats to one func
+    // TODO: Combine add/remove stats to one func?
     private void addStatsFromArmor(Armor armor) {
 
         Stats armorStats = armor.getStats();

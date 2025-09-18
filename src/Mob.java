@@ -15,6 +15,7 @@ public class Mob {
         }
     }
 
+    boolean isAlive = true;
     private String name;
     private MobTier mobTier;
     private int health;
@@ -38,5 +39,9 @@ public class Mob {
         this.damage = mob.damage;
         this.attackTimer = mob.attackTimer;
         this.hitRate = mob.hitRate;
+    }
+
+    public boolean isAlive() {
+        return this.isAlive;
     }
 }
