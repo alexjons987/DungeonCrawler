@@ -109,6 +109,9 @@ public class DungeonCrawlerUI {
         while (true) {
             System.out.println("\n- Your backpack -");
             System.out.println(player.getInventoryString());
+            if (player.getInventory().isEmpty())
+                break;
+
             System.out.println("1. Equip an item");
             System.out.println("2. Close backpack");
 
@@ -133,7 +136,7 @@ public class DungeonCrawlerUI {
             System.out.printf("%d. %s%n", i + 1, player.getInventory().get(i).toString());
         }
 
-        int itemChoice = readMenuChoice(scanner, 0, player.getInventory().size() + 1);
+        int itemChoice = readMenuChoice(scanner, 0, player.getInventory().size());
 
         if (itemChoice != 0 && itemChoice < player.getInventory().size() + 1) {
             Item selectedItem = player.getInventory().get(itemChoice - 1);
@@ -170,7 +173,7 @@ public class DungeonCrawlerUI {
                 System.out.printf("%d. %s%n", i + 1, unopenedChests.get(i).toString());
             }
 
-            int chestChoice = readMenuChoice(scanner, 0, unopenedChests.size() + 1);
+            int chestChoice = readMenuChoice(scanner, 0, unopenedChests.size());
 
             if (chestChoice == 0) {
                 return;
