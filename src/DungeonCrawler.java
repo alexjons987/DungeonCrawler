@@ -51,7 +51,7 @@ public class DungeonCrawler {
     // TODO: Implement
     private boolean combatEncounter(Player player, Module module) {
         Mob mob = module.getMob();
-        System.out.printf("You enter the next module and encounter a %s (%s)!%n", mob.getName(), mob.getTier());
+        System.out.printf("You enter the next module and encounter a %s (%s)!%n", mob.getName(), mob.getTier().getTierDisplayString());
         System.out.println("- Combat log -");
 
         boolean usingOffhand = false;

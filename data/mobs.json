@@ -9,11 +9,27 @@
       "hitRate": 0.9
     },
     {
-      "name": "Skelebob (han heter Bob)",
+      "name": "Skeleton Footman",
       "tier": "NORMAL",
-      "health": 150,
-      "damage": 40,
-      "attackTimer": 1000,
+      "health": 167,
+      "damage": 35,
+      "attackTimer": 3500,
+      "hitRate": 0.9
+    },
+    {
+      "name": "Skeleton Swordsman",
+      "tier": "NORMAL",
+      "health": 140,
+      "damage": 29,
+      "attackTimer": 3250,
+      "hitRate": 0.9
+    },
+    {
+      "name": "Skeleton Spearman",
+      "tier": "NORMAL",
+      "health": 140,
+      "damage": 23,
+      "attackTimer": 2900,
       "hitRate": 0.9
     }
   ],

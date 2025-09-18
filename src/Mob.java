@@ -1,8 +1,4 @@
 public class Mob {
-
-    // Normal -> Elite -> Nightmare
-    // Scale HP by +60%
-
     public enum MobTier {
         NORMAL("Normal"),
         ELITE("Elite"),
@@ -13,17 +9,22 @@ public class Mob {
         MobTier(String tierDisplayString) {
             this.tierDisplayString = tierDisplayString;
         }
+
+        public String getTierDisplayString() {
+            return this.tierDisplayString;
+        }
     }
 
-    boolean isAlive = true;
-    private String name;
-    private MobTier tier;
+    boolean isAlive;
+    private final String name;
+    private final MobTier tier;
     private int health;
-    private int damage;
-    private int attackTimer;
-    private float hitRate;
+    private final int damage;
+    private final int attackTimer;
+    private final float hitRate;
 
     public Mob(String name, MobTier tier, int health, int damage, int attackTimer, float hitRate) {
+        this.isAlive = health > 0;
         this.name = name;
         this.tier = tier;
         this.health = health;
@@ -33,6 +34,7 @@ public class Mob {
     }
 
     public Mob(Mob mob) {
+        this.isAlive = mob.health > 0;
         this.name = mob.name;
         this.tier = mob.tier;
         this.health = mob.health;
