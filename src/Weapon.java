@@ -56,6 +56,27 @@ public class Weapon extends Item {
         this.attackTimer = getBaseATFromHandType(weapon.handType) * (weapon.basePhysWeaponDmg + weapon.baseMagWeaponDmg);
     }
 
+    public WeaponType getWeaponType() {
+        return this.weaponType;
+    }
+
+    public HandType getHandType() {
+        return this.handType;
+    }
+
+    public int getBasePhysWeaponDmg() {
+        return this.basePhysWeaponDmg;
+    }
+
+    public int getBaseMagWeaponDmg() {
+        return this.baseMagWeaponDmg;
+    }
+
+    public int getAttackTimer() {
+        return this.attackTimer;
+    }
+
+    // Funcs
     public int getBaseATFromHandType(HandType handType) {
         return switch (this.handType) {
             case TWO_HANDED -> 37;
@@ -74,14 +95,6 @@ public class Weapon extends Item {
             this.baseMagWeaponDmg = 0;
     }
 
-    public WeaponType getWeaponType() {
-        return this.weaponType;
-    }
-
-    public HandType getHandType() {
-        return this.handType;
-    }
-
     private String getHandTypeString() {
         return switch (this.handType) {
             case TWO_HANDED -> "2H";
@@ -90,6 +103,7 @@ public class Weapon extends Item {
         };
     }
 
+    // toString
     public String toStringShort() {
         return String.format(
                 "[%s] %s (%s) (%s)",

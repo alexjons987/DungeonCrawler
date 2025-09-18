@@ -15,20 +15,20 @@ public class Dungeon {
     }
 
     private String dungeonDisplayName;
-    private ArrayList<Weapon> dungeonWeaponSet;
-    private ArrayList<Armor> dungeonArmorSet;
-    private ArrayList<Item> dungeonItemSet; // Items is a combination of both weapons and armor
-    private ArrayList<Mob> dungeonMobSet;
+    private ArrayList<Weapon> dungeonWeaponTemplates;
+    private ArrayList<Armor> dungeonArmorTemplates;
+    private ArrayList<Item> dungeonItemTemplates; // Items is a combination of both weapons and armor
+    private ArrayList<Mob> dungeonMobTemplates;
     private ArrayList<Module> dungeonModules; // Modules are dungeon rooms/areas
 
     // Altars?
 
     public Dungeon(DungeonPreset preset) {
 
-        this.dungeonWeaponSet = new ArrayList<Weapon>();
-        this.dungeonArmorSet = new ArrayList<Armor>();
-        this.dungeonItemSet = new ArrayList<Item>();
-        this.dungeonMobSet = new ArrayList<Mob>();
+        this.dungeonWeaponTemplates = new ArrayList<Weapon>();
+        this.dungeonArmorTemplates = new ArrayList<Armor>();
+        this.dungeonItemTemplates = new ArrayList<Item>();
+        this.dungeonMobTemplates = new ArrayList<Mob>();
         this.dungeonModules = new ArrayList<Module>();
 
         switch (preset) {
@@ -36,9 +36,9 @@ public class Dungeon {
                 this.dungeonDisplayName = "Ruins of the Forgotten Castle";
                 try {
                     // Items
-                    this.dungeonItemSet = generateStandardItemSet();
+                    this.dungeonItemTemplates = generateStandardItemSet();
                     // Mobs
-                    this.dungeonMobSet = generateMobSet(preset);
+                    this.dungeonMobTemplates = generateMobSet(preset);
                     // Modules
                     this.dungeonModules = generateDungeonModules(10);
                 } catch (Exception e) {
@@ -87,7 +87,7 @@ public class Dungeon {
 
             Weapon generatedWeapon = new Weapon(weaponName, weaponRarity, weaponType, weaponHandType,
                     basePhysDmg, baseMagDmg);
-            this.dungeonWeaponSet.add(generatedWeapon);
+            this.dungeonWeaponTemplates.add(generatedWeapon);
             itemList.add(generatedWeapon);
         }
 
@@ -110,7 +110,7 @@ public class Dungeon {
 
             Armor generatedArmor = new Armor(armorName, armorRarity, armorType, armorEquipRegion,
                     armorBaseDefense, strength, vigor, agility, dexterity, will, knowledge, resourcefulness);
-            this.dungeonArmorSet.add(generatedArmor);
+            this.dungeonArmorTemplates.add(generatedArmor);
             itemList.add(generatedArmor);
         }
 
@@ -170,17 +170,18 @@ public class Dungeon {
         for (int i = 0; i < moduleCount; i++) {
 
             // Pick a random mob
-            Mob mob = new Mob(dungeonMobSet.get(random.nextInt(0, dungeonMobSet.size())));
+            Mob mob = new Mob(dungeonMobTemplates.get(random.nextInt(0, dungeonMobTemplates.size() - 1)));
+            Mob mobCopy = new Mob(mob);
 
             // Add random chests
-            int chestsToAdd = random.nextInt(1, 4 + 1);
+            int chestsToAdd = random.nextInt(2, 5 + 1);
             ArrayList<Chest> chests = new ArrayList<Chest>();
             for (int j = 0; j < chestsToAdd; j++) {
-                chests.add(new Chest(this.dungeonItemSet));
+                chests.add(new Chest(this.dungeonItemTemplates));
             }
 
             // Create new Module
-            Module module = new Module(mob, chests);
+            Module module = new Module(mobCopy, chests);
 
             // Add to modules list
             modules.add(module);
@@ -191,7 +192,7 @@ public class Dungeon {
 
     public Item generateRandomDungeonItem() {
         Random random = new Random();
-        Item randomItem = this.dungeonItemSet.get(random.nextInt(0, this.dungeonItemSet.size()));
+        Item randomItem = this.dungeonItemTemplates.get(random.nextInt(0, this.dungeonItemTemplates.size()));
         if (randomItem.getClass() == Armor.class)
             return new Armor((Armor) randomItem);
         else if (randomItem.getClass() == Weapon.class)
@@ -202,14 +203,14 @@ public class Dungeon {
 
     public Weapon generateRandomDungeonWeapon() {
         Random random = new Random();
-        Weapon randomWeapon = this.dungeonWeaponSet.get(random.nextInt(0, this.dungeonWeaponSet.size()));
+        Weapon randomWeapon = this.dungeonWeaponTemplates.get(random.nextInt(0, this.dungeonWeaponTemplates.size()));
         Weapon randomWeaponCopy = new Weapon(randomWeapon);
         return new Weapon(randomWeaponCopy);
     }
 
     public Weapon generateRandomDungeonWeapon(Item.Rarity rarity) {
         Random random = new Random();
-        Weapon randomWeapon = this.dungeonWeaponSet.get(random.nextInt(0, this.dungeonWeaponSet.size()));
+        Weapon randomWeapon = this.dungeonWeaponTemplates.get(random.nextInt(0, this.dungeonWeaponTemplates.size()));
         Weapon randomWeaponCopy = new Weapon(randomWeapon);
         randomWeaponCopy.increaseRarity(rarity);
         return new Weapon(randomWeaponCopy);
@@ -217,14 +218,14 @@ public class Dungeon {
 
     public Armor generateRandomDungeonArmor() {
         Random random = new Random();
-        Armor randomArmor = this.dungeonArmorSet.get(random.nextInt(0, this.dungeonArmorSet.size()));
+        Armor randomArmor = this.dungeonArmorTemplates.get(random.nextInt(0, this.dungeonArmorTemplates.size()));
         Armor randomArmorCopy = new Armor(randomArmor);
         return new Armor(randomArmor);
     }
 
     public Armor generateRandomDungeonArmor(Item.Rarity rarity) {
         Random random = new Random();
-        Armor randomArmor = this.dungeonArmorSet.get(random.nextInt(0, this.dungeonArmorSet.size()));
+        Armor randomArmor = this.dungeonArmorTemplates.get(random.nextInt(0, this.dungeonArmorTemplates.size()));
         Armor randomArmorCopy = new Armor(randomArmor);
         randomArmorCopy.increaseRarity(rarity);
         return new Armor(randomArmor);
@@ -235,8 +236,8 @@ public class Dungeon {
                 "\"%s\" with %d modules containing %d possible items and %d possible mobs",
                 this.dungeonDisplayName,
                 this.dungeonModules.size(),
-                this.dungeonItemSet.size(),
-                this.dungeonMobSet.size()
+                this.dungeonItemTemplates.size(),
+                this.dungeonMobTemplates.size()
         );
     }
 }

@@ -1,6 +1,6 @@
 import java.util.HashMap;
 
-public class Stats {
+public class Attributes {
     private int strength;
     private int vigor;
     private int agility;
@@ -9,11 +9,11 @@ public class Stats {
     private int knowledge;
     private int resourcefulness;
 
-    public Stats() {
+    public Attributes() {
         
     }
 
-    public Stats(int strength, int vigor, int agility, int dexterity, int will, int knowledge, int resourcefulness) {
+    public Attributes(int strength, int vigor, int agility, int dexterity, int will, int knowledge, int resourcefulness) {
         this.strength = strength;
         this.vigor = vigor;
         this.agility = agility;

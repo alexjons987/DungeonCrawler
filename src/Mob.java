@@ -17,15 +17,15 @@ public class Mob {
 
     boolean isAlive = true;
     private String name;
-    private MobTier mobTier;
+    private MobTier tier;
     private int health;
     private int damage;
-    private float attackTimer;
+    private int attackTimer;
     private float hitRate;
 
-    public Mob(String name, MobTier mobTier, int health, int damage, int attackTimer, float hitRate) {
+    public Mob(String name, MobTier tier, int health, int damage, int attackTimer, float hitRate) {
         this.name = name;
-        this.mobTier = mobTier;
+        this.tier = tier;
         this.health = health;
         this.damage = damage;
         this.attackTimer = attackTimer;
@@ -34,14 +34,48 @@ public class Mob {
 
     public Mob(Mob mob) {
         this.name = mob.name;
-        this.mobTier = mob.mobTier;
+        this.tier = mob.tier;
         this.health = mob.health;
         this.damage = mob.damage;
         this.attackTimer = mob.attackTimer;
         this.hitRate = mob.hitRate;
     }
 
+    // Props
     public boolean isAlive() {
         return this.isAlive;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public MobTier getTier() {
+        return this.tier;
+    }
+
+    public int getHealth() {
+        return this.health;
+    }
+
+    public int getDamage() {
+        return this.damage;
+    }
+
+    public int getAttackTimer() {
+        return this.attackTimer;
+    }
+
+    public float getHitRate() {
+        return this.hitRate;
+    }
+
+    // Funcs
+    public void takeDamage(int damage) {
+        this.health -= damage;
+        if (this.health <= 0) {
+            this.health = 0;
+            this.isAlive = false;
+        }
     }
 }

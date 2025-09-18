@@ -53,7 +53,7 @@ public class Armor extends Item {
 
     private final ArmorType armorType;
     private final ArmorEquipRegion armorEquipRegion;
-    private final Stats stats;
+    private final Attributes attributes;
     private int armorRating;
 
     public Armor(String name, Rarity rarity, ArmorType armorType, ArmorEquipRegion armorEquipRegion, int armorRating, int strength, int vigor,
@@ -62,7 +62,7 @@ public class Armor extends Item {
         this.armorType = armorType;
         this.armorEquipRegion = armorEquipRegion;
         this.armorRating = armorRating + (armorType.getArmorScaling() * rarity.getStatMultiplier());
-        this.stats = new Stats(strength, vigor, agility, dexterity, will, knowledge, resourcefulness);
+        this.attributes = new Attributes(strength, vigor, agility, dexterity, will, knowledge, resourcefulness);
     }
 
     public Armor(Armor armor) {
@@ -70,39 +70,46 @@ public class Armor extends Item {
         this.armorType = armor.armorType;
         this.armorEquipRegion = armor.armorEquipRegion;
         this.armorRating = armor.armorRating;
-        this.stats = armor.stats;
+        this.attributes = armor.attributes;
     }
 
-    // TODO: Implement setRarity and recalculate armor rating and stats
+    public ArmorType getArmorType() {
+        return this.armorType;
+    }
+
+    public ArmorEquipRegion getArmorEquipRegion() {
+        return this.armorEquipRegion;
+    }
+
+    public Attributes getStats() {
+        return this.attributes;
+    }
+
+    public int getArmorRating() {
+        return this.armorRating;
+    }
+
     public void increaseRarity(Rarity rarity) {
         super.increaseRarity(rarity);
 
         this.armorRating = armorRating + (armorType.getArmorScaling() * rarity.getStatMultiplier());
 
-        HashMap<String, Integer> statMap = this.stats.getAllAttributes();
+        HashMap<String, Integer> statMap = this.attributes.getAllAttributes();
 
         if (statMap.get("strength") != 0)
-            this.stats.setStrength(statMap.get("strength") + (armorType.getStatScaling() * rarity.getStatMultiplier()));
+            this.attributes.setStrength(statMap.get("strength") + (armorType.getStatScaling() * rarity.getStatMultiplier()));
         if (statMap.get("vigor") != 0)
-            this.stats.setVigor(statMap.get("vigor") + (armorType.getStatScaling() * rarity.getStatMultiplier()));
+            this.attributes.setVigor(statMap.get("vigor") + (armorType.getStatScaling() * rarity.getStatMultiplier()));
         if (statMap.get("agility") != 0)
-            this.stats.setAgility(statMap.get("agility") + (armorType.getStatScaling() * rarity.getStatMultiplier()));
+            this.attributes.setAgility(statMap.get("agility") + (armorType.getStatScaling() * rarity.getStatMultiplier()));
         if (statMap.get("dexterity") != 0)
-            this.stats.setDexterity(statMap.get("dexterity") + (armorType.getStatScaling() * rarity.getStatMultiplier()));
+            this.attributes.setDexterity(statMap.get("dexterity") + (armorType.getStatScaling() * rarity.getStatMultiplier()));
         if (statMap.get("will") != 0)
-            this.stats.setWill(statMap.get("will") + (armorType.getStatScaling() * rarity.getStatMultiplier()));
+            this.attributes.setWill(statMap.get("will") + (armorType.getStatScaling() * rarity.getStatMultiplier()));
         if (statMap.get("knowledge") != 0)
-            this.stats.setKnowledge(statMap.get("knowledge") + (armorType.getStatScaling() * rarity.getStatMultiplier()));
+            this.attributes.setKnowledge(statMap.get("knowledge") + (armorType.getStatScaling() * rarity.getStatMultiplier()));
         if (statMap.get("resourcefulness") != 0)
-            this.stats.setResourcefulness(statMap.get("resourcefulness") + (armorType.getStatScaling() * rarity.getStatMultiplier()));
-    }
-
-    public Stats getStats() {
-        return this.stats;
-    }
-
-    public ArmorEquipRegion getArmorEquipRegion() {
-        return this.armorEquipRegion;
+            this.attributes.setResourcefulness(statMap.get("resourcefulness") + (armorType.getStatScaling() * rarity.getStatMultiplier()));
     }
 
     public String toStringShort() {
@@ -128,13 +135,13 @@ public class Armor extends Item {
             )
         );
 
-        int str = this.stats.getStrength();
-        int vig = this.stats.getVigor();
-        int agi = this.stats.getAgility();
-        int dex = this.stats.getDexterity();
-        int wil = this.stats.getWill();
-        int knw = this.stats.getKnowledge();
-        int res = this.stats.getResourcefulness();
+        int str = this.attributes.getStrength();
+        int vig = this.attributes.getVigor();
+        int agi = this.attributes.getAgility();
+        int dex = this.attributes.getDexterity();
+        int wil = this.attributes.getWill();
+        int knw = this.attributes.getKnowledge();
+        int res = this.attributes.getResourcefulness();
 
         if (str != 0) sb.append(String.format(" / STR: %+d", str));
         if (vig != 0) sb.append(String.format(" / VIG: %+d", vig));

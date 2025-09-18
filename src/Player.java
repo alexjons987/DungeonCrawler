@@ -6,9 +6,11 @@ public class Player {
 
     }
 
-    private final Stats stats;
+    private boolean isAlive = true;
+    private final Attributes attributes;
     private int health;
     private final ArrayList<Item> inventory;
+    private int armorRating = 0;
 
     // Equipped armor
     Armor equippedHead;
@@ -27,24 +29,9 @@ public class Player {
     // Active buffs
 
     // Constructors
-    public Player() {
-        this.stats = new Stats();
-        this.health = this.stats.getMaxHP();
-        this.inventory = new ArrayList<Item>();
-        this.equippedHead = null;
-        this.equippedChest = null;
-        this.equippedLegs = null;
-        this.equippedHands = null;
-        this.equippedFeet = null;
-        this.equippedNecklace = null;
-        this.equippedRing = null;
-        this.equippedMainHand = null;
-        this.equippedOffHand = null;
-    }
-
     public Player(int strength, int vigor, int agility, int dexterity, int will, int knowledge, int resourcefulness) {
-        this.stats = new Stats(strength, vigor, agility, dexterity, will, knowledge, resourcefulness);
-        this.health = this.stats.getMaxHP();
+        this.attributes = new Attributes(strength, vigor, agility, dexterity, will, knowledge, resourcefulness);
+        this.health = this.attributes.getMaxHP();
         this.inventory = new ArrayList<Item>();
         this.equippedHead = null;
         this.equippedChest = null;
@@ -58,8 +45,12 @@ public class Player {
     }
 
     // Getters / Setters
-    public Stats getStats() {
-        return this.stats;
+    public boolean isAlive() {
+        return this.isAlive;
+    }
+
+    public Attributes getStats() {
+        return this.attributes;
     }
 
     public int getHealth() {
@@ -71,11 +62,56 @@ public class Player {
     }
 
     public float getHealthPercentage() {
-        return (float) this.health / this.stats.getMaxHP();
+        return (float) this.health / this.attributes.getMaxHP();
+    }
+
+    public Weapon getEquippedMainHand() {
+        return this.equippedMainHand;
+    }
+
+    public Weapon getEquippedOffHand() {
+        return this.equippedOffHand;
     }
 
     // Funcs
+    public int getArmorRating() {
+        int armorRating = 0;
+
+        if (equippedHead != null)
+            armorRating += this.equippedHead.getArmorRating();
+        if (equippedChest != null)
+            armorRating += this.equippedChest.getArmorRating();
+        if (equippedLegs != null)
+            armorRating += this.equippedLegs.getArmorRating();
+        if (equippedHands != null)
+            armorRating += this.equippedHands.getArmorRating();
+        if (equippedFeet != null)
+            armorRating += this.equippedFeet.getArmorRating();
+        if (equippedNecklace != null)
+            armorRating += this.equippedNecklace.getArmorRating();
+        if (equippedRing != null)
+            armorRating += this.equippedRing.getArmorRating();
+
+        return armorRating;
+    }
+
+    public void takeDamage(int damage) {
+        this.health -= damage;
+        if (this.health <= 0) {
+            this.health = 0;
+            this.isAlive = false;
+        }
+    }
+
+    public float getPhysDmgReduction() {
+        return 0.0015f * this.armorRating; // 0.15% Phys dmg reduction per armor point
+    }
+
     public String getInventoryString() {
+
+        if (this.inventory.isEmpty())
+            return "There are no items in here...";
+
         StringBuilder inventorySB = new StringBuilder();
         for (Item item : this.inventory)
             inventorySB.append(item.toString()).append("\n");
@@ -150,32 +186,39 @@ public class Player {
                 this.inventory.remove(armor);
                 break;
         }
+        recalculateArmorRating();
     }
 
-    // TODO: Combine add/remove stats to one func?
+    private void recalculateArmorRating() {
+        this.armorRating = getArmorRating();
+    }
+
+
+
+    // TODO: Combine add/remove attributes to one func?
     private void addStatsFromArmor(Armor armor) {
 
-        Stats armorStats = armor.getStats();
+        Attributes armorAttributes = armor.getStats();
         float currHealthPerc = getHealthPercentage();
 
-        int armorStrength = armorStats.getStrength();
-        int armorVigor = armorStats.getVigor();
-        int armorAgility = armorStats.getAgility();
-        int armorDexterity = armorStats.getDexterity();
-        int armorWill = armorStats.getWill();
-        int armorKnowledge = armorStats.getKnowledge();
-        int armorResourcefulness = armorStats.getResourcefulness();
+        int armorStrength = armorAttributes.getStrength();
+        int armorVigor = armorAttributes.getVigor();
+        int armorAgility = armorAttributes.getAgility();
+        int armorDexterity = armorAttributes.getDexterity();
+        int armorWill = armorAttributes.getWill();
+        int armorKnowledge = armorAttributes.getKnowledge();
+        int armorResourcefulness = armorAttributes.getResourcefulness();
 
-        this.stats.setStrength(this.stats.getStrength() + armorStrength);
-        this.stats.setVigor(this.stats.getVigor() + armorVigor);
-        this.stats.setAgility(this.stats.getAgility() + armorAgility);
-        this.stats.setDexterity(this.stats.getDexterity() + armorDexterity);
-        this.stats.setWill(this.stats.getWill() + armorWill);
-        this.stats.setKnowledge(this.stats.getKnowledge() + armorKnowledge);
-        this.stats.setResourcefulness(this.stats.getResourcefulness() + armorResourcefulness);
+        this.attributes.setStrength(this.attributes.getStrength() + armorStrength);
+        this.attributes.setVigor(this.attributes.getVigor() + armorVigor);
+        this.attributes.setAgility(this.attributes.getAgility() + armorAgility);
+        this.attributes.setDexterity(this.attributes.getDexterity() + armorDexterity);
+        this.attributes.setWill(this.attributes.getWill() + armorWill);
+        this.attributes.setKnowledge(this.attributes.getKnowledge() + armorKnowledge);
+        this.attributes.setResourcefulness(this.attributes.getResourcefulness() + armorResourcefulness);
 
         // Update new health accordingly
-        float newCurrHealth = this.stats.getMaxHP() * currHealthPerc;
+        float newCurrHealth = this.attributes.getMaxHP() * currHealthPerc;
         this.health = (int) newCurrHealth;
 
         for (int n : new int[]{ armorStrength, armorVigor, armorAgility, armorDexterity, armorWill, armorKnowledge, armorResourcefulness }) {
@@ -186,27 +229,27 @@ public class Player {
 
     private void removeStatsFromArmor(Armor armor) {
 
-        Stats armorStats = armor.getStats();
+        Attributes armorAttributes = armor.getStats();
         float currHealthPerc = getHealthPercentage();
 
-        int armorStrength = armorStats.getStrength() * -1;
-        int armorVigor = armorStats.getVigor() * -1;
-        int armorAgility = armorStats.getAgility() * -1;
-        int armorDexterity = armorStats.getDexterity() * -1;
-        int armorWill = armorStats.getWill() * -1;
-        int armorKnowledge = armorStats.getKnowledge() * -1;
-        int armorResourcefulness = armorStats.getResourcefulness() * -1;
+        int armorStrength = armorAttributes.getStrength() * -1;
+        int armorVigor = armorAttributes.getVigor() * -1;
+        int armorAgility = armorAttributes.getAgility() * -1;
+        int armorDexterity = armorAttributes.getDexterity() * -1;
+        int armorWill = armorAttributes.getWill() * -1;
+        int armorKnowledge = armorAttributes.getKnowledge() * -1;
+        int armorResourcefulness = armorAttributes.getResourcefulness() * -1;
 
-        this.stats.setStrength(this.stats.getStrength() + armorStrength);
-        this.stats.setVigor(this.stats.getVigor() + armorVigor);
-        this.stats.setAgility(this.stats.getAgility() + armorAgility);
-        this.stats.setDexterity(this.stats.getDexterity() + armorDexterity);
-        this.stats.setWill(this.stats.getWill() + armorWill);
-        this.stats.setKnowledge(this.stats.getKnowledge() + armorKnowledge);
-        this.stats.setResourcefulness(this.stats.getResourcefulness() + armorResourcefulness);
+        this.attributes.setStrength(this.attributes.getStrength() + armorStrength);
+        this.attributes.setVigor(this.attributes.getVigor() + armorVigor);
+        this.attributes.setAgility(this.attributes.getAgility() + armorAgility);
+        this.attributes.setDexterity(this.attributes.getDexterity() + armorDexterity);
+        this.attributes.setWill(this.attributes.getWill() + armorWill);
+        this.attributes.setKnowledge(this.attributes.getKnowledge() + armorKnowledge);
+        this.attributes.setResourcefulness(this.attributes.getResourcefulness() + armorResourcefulness);
 
         // Update new health accordingly
-        float newCurrHealth = this.stats.getMaxHP() * currHealthPerc;
+        float newCurrHealth = this.attributes.getMaxHP() * currHealthPerc;
         this.health = (int) newCurrHealth;
 
         for (int n : new int[]{ armorStrength, armorVigor, armorAgility, armorDexterity, armorWill, armorKnowledge, armorResourcefulness }) {
@@ -218,25 +261,38 @@ public class Player {
     public void equipWeapon(Weapon weapon) {
 
         switch (weapon.getHandType()) {
-            case Weapon.HandType.TWO_HANDED: // Unequip current MH + OH
+            case Weapon.HandType.TWO_HANDED:
+                // Unequip current MH
                 if (this.equippedMainHand != null) {
                     this.inventory.add(this.equippedMainHand);
+                    this.equippedMainHand = null;
                 }
+                // And unequip current OH
                 if (this.equippedOffHand != null) {
                     this.inventory.add(this.equippedOffHand);
+                    this.equippedOffHand = null;
                 }
                 this.equippedMainHand = weapon;
                 this.inventory.remove(weapon);
-            case Weapon.HandType.MAIN_HAND: // Unequip current MH
+            case Weapon.HandType.MAIN_HAND:
+                // Unequip current MH
                 if (this.equippedMainHand != null) {
                     this.inventory.add(this.equippedMainHand);
+                    this.equippedMainHand = null;
                 }
                 this.equippedMainHand = weapon;
                 this.inventory.remove(weapon);
                 break;
-            case Weapon.HandType.OFF_HAND: // Unequip current OH
+            case Weapon.HandType.OFF_HAND:
+                // Unequip current MH if 2H
+                if (this.equippedMainHand != null && this.equippedMainHand.getHandType() == Weapon.HandType.TWO_HANDED) {
+                    this.inventory.add(this.equippedMainHand);
+                    this.equippedMainHand = null;
+                }
+                // Unequip current OH
                 if (this.equippedOffHand != null) {
                     this.inventory.add(this.equippedOffHand);
+                    this.equippedOffHand = null;
                 }
                 this.equippedOffHand = weapon;
                 this.inventory.remove(weapon);
@@ -297,18 +353,20 @@ public class Player {
             "Knowledge: %d%n" +
             "Resourcefulness: %d%n" +
             "Health: %d/%d (%.1f%%)%n" +
-            "Action Speed: %.1f%%",
-            this.stats.getStrength(),
-            this.stats.getVigor(),
-            this.stats.getAgility(),
-            this.stats.getDexterity(),
-            this.stats.getWill(),
-            this.stats.getKnowledge(),
-            this.stats.getResourcefulness(),
+            "Action Speed: %.1f%%%n" +
+            "Phys. Dmg Reduction: %.2f%%",
+            this.attributes.getStrength(),
+            this.attributes.getVigor(),
+            this.attributes.getAgility(),
+            this.attributes.getDexterity(),
+            this.attributes.getWill(),
+            this.attributes.getKnowledge(),
+            this.attributes.getResourcefulness(),
             this.health,
-            this.stats.getMaxHP(),
+            this.attributes.getMaxHP(),
             this.getHealthPercentage() * 100,
-            this.stats.getActionSpeed()
+            this.attributes.getActionSpeed(),
+            this.getPhysDmgReduction() * 100
         );
     }
 
@@ -316,7 +374,7 @@ public class Player {
         return String.format("%s%n%s", this.toStringEquipped(), this.toStringStats());
     }
 
-    // TODO: Make stats (will/knowledge) increase/decrease effectiveness of abilities/perks
+    // TODO: Make attributes (will/knowledge) increase/decrease effectiveness of abilities/perks
     // TODO: Abilites
     // Blood Exchange (Campfire to refresh) - When your health drops below 30%, gain +40% lifesteal for your 12 next attacks.
     // War Cry (Campfire to refresh) - When your health drops below 50%, gain +25% max health bonus for the rest of the combat encounter (current health scales accordingly).
