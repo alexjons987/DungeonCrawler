@@ -49,7 +49,7 @@ public class Player {
         return this.isAlive;
     }
 
-    public Attributes getStats() {
+    public Attributes getAttributes() {
         return this.attributes;
     }
 
@@ -100,6 +100,13 @@ public class Player {
         if (this.health <= 0) {
             this.health = 0;
             this.isAlive = false;
+        }
+    }
+
+    public void heal(int amount) {
+        this.health += amount;
+        if (this.health > this.attributes.getMaxHP()) {
+            this.health = this.attributes.getMaxHP();
         }
     }
 
@@ -220,11 +227,6 @@ public class Player {
         // Update new health accordingly
         float newCurrHealth = this.attributes.getMaxHP() * currHealthPerc;
         this.health = (int) newCurrHealth;
-
-        for (int n : new int[]{ armorStrength, armorVigor, armorAgility, armorDexterity, armorWill, armorKnowledge, armorResourcefulness }) {
-            System.out.printf("%d ", n);
-        }
-        System.out.println();
     }
 
     private void removeStatsFromArmor(Armor armor) {
@@ -251,11 +253,6 @@ public class Player {
         // Update new health accordingly
         float newCurrHealth = this.attributes.getMaxHP() * currHealthPerc;
         this.health = (int) newCurrHealth;
-
-        for (int n : new int[]{ armorStrength, armorVigor, armorAgility, armorDexterity, armorWill, armorKnowledge, armorResourcefulness }) {
-            System.out.printf("%d ", n);
-        }
-        System.out.println();
     }
 
     public void equipWeapon(Weapon weapon) {

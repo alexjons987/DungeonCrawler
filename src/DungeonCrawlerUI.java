@@ -74,7 +74,8 @@ public class DungeonCrawlerUI {
     //      4b. Pray
     public static void postCombatMenu(Scanner scanner, Player player, Module module) {
 
-        AtomicInteger currResourcefulness = new AtomicInteger(player.getStats().getResourcefulness());
+        AtomicInteger currResourcefulness = new AtomicInteger(player.getAttributes().getResourcefulness());
+        boolean playerHasRested = false;
 
         while (true) {
             System.out.println("\n- Select action -");
@@ -96,11 +97,16 @@ public class DungeonCrawlerUI {
                     System.out.println(player.toString());
                 }
                 case 3 -> backpackMenu(scanner, player);
-                case 4 -> playerRestChoice(scanner, player);
+                case 4 -> {
+                    if (!playerHasRested) {
+                        playerHasRested = playerRestChoice(scanner, player);
+                    } else {
+                        System.out.println("You've already rested!");
+                    }
+                }
                 case 5 -> lootMenu(scanner, player, module, currResourcefulness);
                 default -> throw new IllegalStateException("Fell out of playerMenu switch-case.");
             }
-            ;
         }
     }
 
@@ -108,52 +114,58 @@ public class DungeonCrawlerUI {
         System.out.println("You open your backpack...");
         while (true) {
             System.out.println("\n- Your backpack -");
-            System.out.println(player.getInventoryString());
-            if (player.getInventory().isEmpty())
-                break;
-
-            System.out.println("1. Equip an item");
-            System.out.println("2. Close backpack");
-
-            int menuChoice = readMenuChoice(scanner, 1, 2);
-
-            switch (menuChoice) {
-                case 1 -> equipMenu(scanner, player);
-                case 2 -> {
-                    System.out.println("You close your backpack...");
-                    return;
-                }
-                default -> throw new IllegalStateException("Fell out of backpackMenu switch-case.");
+            for (int i = 0; i < player.getInventory().size(); i++) {
+                System.out.printf("%d. %s%n", i + 1, player.getInventory().get(i).toString());
             }
-            ;
-        }
-    }
+            System.out.println("\n0. Close backpack");
+            System.out.println("Select item to equip:");
 
-    public static void equipMenu(Scanner scanner, Player player) {
-        System.out.println("\n- Equip an item -");
-        System.out.println("Select item to equip (0 = cancel)");
-        for (int i = 0; i < player.getInventory().size(); i++) {
-            System.out.printf("%d. %s%n", i + 1, player.getInventory().get(i).toString());
-        }
+            int itemChoice = readMenuChoice(scanner, 0, player.getInventory().size());
 
-        int itemChoice = readMenuChoice(scanner, 0, player.getInventory().size());
+            if (itemChoice == 0) {
+                return;
+            }
 
-        if (itemChoice != 0 && itemChoice < player.getInventory().size() + 1) {
-            Item selectedItem = player.getInventory().get(itemChoice - 1);
+            if (itemChoice != 0 && itemChoice < player.getInventory().size() + 1) {
+                Item selectedItem = player.getInventory().get(itemChoice - 1);
 
-            if (selectedItem.getClass() == Armor.class) {
-                player.equipArmor((Armor) selectedItem);
-                System.out.printf("You equipped %s%n", selectedItem.toString());
-            } else if (selectedItem.getClass() == Weapon.class) {
-                player.equipWeapon((Weapon) selectedItem);
-                System.out.printf("You equipped %s%n", selectedItem.toString());
+                if (selectedItem.getClass() == Armor.class) {
+                    player.equipArmor((Armor) selectedItem);
+                    System.out.printf("You equipped %s%n", selectedItem.toString());
+                } else if (selectedItem.getClass() == Weapon.class) {
+                    player.equipWeapon((Weapon) selectedItem);
+                    System.out.printf("You equipped %s%n", selectedItem.toString());
+                }
             }
         }
     }
 
     // TODO: Implement abilities/perks, campfire/pray resting
-    public static void playerRestChoice(Scanner scanner, Player player) {
-        System.out.println("[NOT IMPLEMENTED]");
+    public static boolean playerRestChoice(Scanner scanner, Player player) {
+        while (true) {
+            System.out.println("\n- Select action -");
+            System.out.println("1. Light a campfire");
+            System.out.println("2. Pray");
+            System.out.println("0. Cancel");
+
+            int menuChoice = readMenuChoice(scanner, 1, 2);
+
+            switch (menuChoice) {
+                case 1 -> {
+                    int playerRes = player.getAttributes().getResourcefulness();
+                    System.out.println("You light a campfire...");
+                    player.heal(playerRes);
+                    System.out.printf("You restore %d health.%n", playerRes);
+                    return true;
+                }
+                case 2 -> {
+                    System.out.println("You begin to pray...");
+                    System.out.println("No one answers... [NOT IMPLEMENTED]");
+                    return false;
+                }
+                default -> throw new IllegalStateException("Fell out of playerRestChoice switch-case.");
+            }
+        }
     }
 
     private static void lootMenu(Scanner scanner, Player player, Module module, AtomicInteger currentResourcefulness) {

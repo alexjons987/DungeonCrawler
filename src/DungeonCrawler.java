@@ -143,7 +143,7 @@ public class DungeonCrawler {
     // TODO: Implement
     private void postCombat(Scanner scanner, Player player, Module module, boolean printPostCombatText) {
         if (printPostCombatText) {
-            System.out.printf("Exhausted from the %s encounter, you take a moment to rest...", module.getMob().getName());
+            System.out.printf("Exhausted from the %s encounter, you take a moment...%n", module.getMob().getName());
         }
         DungeonCrawlerUI.postCombatMenu(scanner, player, module);
     }
