@@ -95,8 +95,8 @@ public class Attributes {
         return (int) ((float) this.strength * 0.25f + (float) this.vigor * 0.75f) * 2 + 70;
     }
 
-    public float getActionSpeed() {
+    public float getActionSpeedPerc() {
         float actionSpeed = (this.agility * 0.25f + this.dexterity * 0.75f) / 15.0f;
-        return (float) Math.pow(actionSpeed, 3) - 1.0f;
+        return (float) (Math.pow(actionSpeed, 3) - 1.0f) / 100;
     }
 }

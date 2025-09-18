@@ -56,7 +56,7 @@ public class DungeonCrawler {
 
         boolean usingOffhand = false;
         Weapon playerActiveWeapon = player.getEquippedMainHand();
-        int playerWeaponAttackTimer = playerActiveWeapon.getAttackTimer();
+        int playerWeaponAttackTimer = getEffectiveAttackTimer(playerActiveWeapon, player);
         int mobAttackTimer = mob.getAttackTimer();
 
         long nextPlayerAttackTick = playerWeaponAttackTimer; // Set first player action tick
@@ -74,10 +74,8 @@ public class DungeonCrawler {
             boolean playerActionThisTick = (tick == nextPlayerAttackTick);
             boolean mobActionThisTick = (tick == nextMobAttackTick);
 
-            // Resolve attacks scheduled at this tick. If both act, resolve simultaneously:
-            int playerDamage = 0;
-            int mobDamage = 0;
-
+            // Check attacks on current tick
+            int playerDamage = 0, mobDamage = 0;
             if (playerActionThisTick && player.isAlive()) {
                 playerDamage = playerActiveWeapon.getBasePhysWeaponDmg() + playerActiveWeapon.getBaseMagWeaponDmg();
             }
@@ -114,11 +112,11 @@ public class DungeonCrawler {
                 if (!usingOffhand && player.getEquippedOffHand() != null) {
                     playerActiveWeapon = player.getEquippedOffHand();
                     usingOffhand = true;
-                    playerWeaponAttackTimer = playerActiveWeapon.getAttackTimer();
+                    playerWeaponAttackTimer = getEffectiveAttackTimer(playerActiveWeapon, player);
                 } else {
                     playerActiveWeapon = player.getEquippedMainHand();
                     usingOffhand = false;
-                    playerWeaponAttackTimer = playerActiveWeapon.getAttackTimer();
+                    playerWeaponAttackTimer = getEffectiveAttackTimer(playerActiveWeapon, player);
                 }
                 nextPlayerAttackTick += playerWeaponAttackTimer;
             }
@@ -135,12 +133,15 @@ public class DungeonCrawler {
             System.out.println("You're struck and your vision turns blurry...");
             return false; // player loses
         } else {
-            System.out.println("You trade blows, both fall...");
+            System.out.println("You trade blows, both fall to the ground...");
             return false;
         }
     }
 
-    // TODO: Implement
+    private int getEffectiveAttackTimer(Weapon weapon, Player player) {
+        return (int) ((float) weapon.getAttackTimer() * player.getPlayerActionSpeedModifier());
+    }
+
     private void postCombat(Scanner scanner, Player player, Module module, boolean printPostCombatText) {
         if (printPostCombatText) {
             System.out.printf("Exhausted from the %s encounter, you take a moment...%n", module.getMob().getName());

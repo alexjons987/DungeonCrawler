@@ -95,6 +95,10 @@ public class Player {
         return armorRating;
     }
 
+    public float getPhysDmgReduction() {
+        return 0.0015f * this.armorRating; // 0.15% Phys dmg reduction per armor point
+    }
+
     public void takeDamage(int damage) {
         this.health -= damage;
         if (this.health <= 0) {
@@ -110,9 +114,13 @@ public class Player {
         }
     }
 
-    public float getPhysDmgReduction() {
-        return 0.0015f * this.armorRating; // 0.15% Phys dmg reduction per armor point
+    public float getPlayerActionSpeedModifier() {
+        if (this.attributes.getActionSpeedPerc() >= 0)
+            return 1.0f - this.attributes.getActionSpeedPerc();
+        else
+            return 1.0f + this.attributes.getActionSpeedPerc();
     }
+
 
     public String getInventoryString() {
 
@@ -362,7 +370,7 @@ public class Player {
             this.health,
             this.attributes.getMaxHP(),
             this.getHealthPercentage() * 100,
-            this.attributes.getActionSpeed(),
+            this.attributes.getActionSpeedPerc() * 100,
             this.getPhysDmgReduction() * 100
         );
     }
