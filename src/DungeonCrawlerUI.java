@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class DungeonCrawlerUI {
     public static void printTitle() {
@@ -13,7 +15,8 @@ public class DungeonCrawlerUI {
                 int choice = Integer.parseInt(userInput);
                 if (choice >= min && choice <= max)
                     return choice;
-            } catch (NumberFormatException ignored) {}
+            } catch (NumberFormatException ignored) {
+            }
             System.out.printf("Please enter a number between %d and %d.%n", min, max);
         }
     }
@@ -69,7 +72,9 @@ public class DungeonCrawlerUI {
     // 4. Rest
     //      4a. Light a campfire
     //      4b. Pray
-    public static void playerMenu(Scanner scanner, Player player, Dungeon dungeon) {
+    public static void postCombatMenu(Scanner scanner, Player player, Module module) {
+
+        AtomicInteger currResourcefulness = new AtomicInteger(player.getStats().getResourcefulness());
 
         while (true) {
             System.out.println("\n- Select action -");
@@ -77,27 +82,31 @@ public class DungeonCrawlerUI {
             System.out.println("2. Examine yourself (Show stats)");
             System.out.println("3. Open your backpack");
             System.out.println("4. Rest");
+            System.out.println("5. Check for loot");
 
-            int menuChoice = readMenuChoice(scanner, 1, 4);
+            int menuChoice = readMenuChoice(scanner, 1, 5);
 
             switch (menuChoice) {
                 case 1 -> {
                     return;
                 }
                 case 2 -> {
+                    System.out.println("You examine yourself...");
                     System.out.println("- Your gear/stats -");
                     System.out.println(player.toString());
                 }
                 case 3 -> backpackMenu(scanner, player);
                 case 4 -> playerRestChoice(scanner, player);
+                case 5 -> lootMenu(scanner, player, module, currResourcefulness);
                 default -> throw new IllegalStateException("Fell out of playerMenu switch-case.");
-            };
+            }
+            ;
         }
     }
 
     public static void backpackMenu(Scanner scanner, Player player) {
-        boolean playerEquipping = true;
-        while (playerEquipping) {
+        System.out.println("You open your backpack...");
+        while (true) {
             System.out.println("\n- Your backpack -");
             System.out.println(player.getInventoryString());
             System.out.println("1. Equip an item");
@@ -109,10 +118,11 @@ public class DungeonCrawlerUI {
                 case 1 -> equipMenu(scanner, player);
                 case 2 -> {
                     System.out.println("You close your backpack...");
-                    playerEquipping = false;
+                    return;
                 }
                 default -> throw new IllegalStateException("Fell out of backpackMenu switch-case.");
-            };
+            }
+            ;
         }
     }
 
@@ -123,7 +133,7 @@ public class DungeonCrawlerUI {
             System.out.printf("%d. %s%n", i + 1, player.getInventory().get(i).toString());
         }
 
-        int itemChoice = readMenuChoice(scanner,0, player.getInventory().size() + 1);
+        int itemChoice = readMenuChoice(scanner, 0, player.getInventory().size() + 1);
 
         if (itemChoice != 0 && itemChoice < player.getInventory().size() + 1) {
             Item selectedItem = player.getInventory().get(itemChoice - 1);
@@ -131,8 +141,7 @@ public class DungeonCrawlerUI {
             if (selectedItem.getClass() == Armor.class) {
                 player.equipArmor((Armor) selectedItem);
                 System.out.printf("You equipped %s%n", selectedItem.toString());
-            }
-            else if (selectedItem.getClass() == Weapon.class) {
+            } else if (selectedItem.getClass() == Weapon.class) {
                 player.equipWeapon((Weapon) selectedItem);
                 System.out.printf("You equipped %s%n", selectedItem.toString());
             }
@@ -142,5 +151,53 @@ public class DungeonCrawlerUI {
     // TODO: Implement abilities/perks, campfire/pray resting
     public static void playerRestChoice(Scanner scanner, Player player) {
         System.out.println("[NOT IMPLEMENTED]");
+    }
+
+    private static void lootMenu(Scanner scanner, Player player, Module module, AtomicInteger currentResourcefulness) {
+
+        System.out.printf("You scan your surroundings and see %d unopened chests...%n", module.getUnopenedChests().size());
+
+        if (module.getUnopenedChests().isEmpty()) {
+            return;
+        }
+
+        while (true) {
+            ArrayList<Chest> unopenedChests = module.getUnopenedChests();
+            int unopenedChestsCount = unopenedChests.size();
+            System.out.println("\n- Open a chest -");
+            System.out.printf("Current resourcefulness: %d - (0 = cancel)%n", currentResourcefulness.get());
+            for (int i = 0; i < unopenedChestsCount; i++) {
+                System.out.printf("%d. %s%n", i + 1, unopenedChests.get(i).toString());
+            }
+
+            int chestChoice = readMenuChoice(scanner, 0, unopenedChests.size() + 1);
+
+            if (chestChoice == 0) {
+                return;
+            }
+
+            if (currentResourcefulness.get() < unopenedChests.get(chestChoice - 1).getCost()) {
+                System.out.println("You don't have enough resourcefulness left to open that!");
+            }
+            else if (chestChoice < unopenedChests.size() + 1) {
+                Item foundItem = unopenedChests.get(chestChoice - 1).openChest(currentResourcefulness.get());
+                currentResourcefulness.set(currentResourcefulness.get() - unopenedChests.get(chestChoice - 1).getCost());
+
+                if (foundItem.getClass() == Armor.class) {
+                    Armor foundItemCopy = new Armor((Armor) foundItem);
+                    player.getInventory().add(foundItemCopy);
+                    System.out.printf("You found %s%n", foundItem.toString());
+                } else if (foundItem.getClass() == Weapon.class) {
+                    Weapon foundItemCopy = new Weapon((Weapon) foundItem);
+                    player.getInventory().add(foundItemCopy);
+                    System.out.printf("You found %s%n", foundItem.toString());
+                }
+            }
+
+            if (module.getUnopenedChests().isEmpty()) {
+                System.out.println("There are no more unopened chests...");
+                return;
+            }
+        }
     }
 }

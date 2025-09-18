@@ -6,6 +6,7 @@ public class Chest {
     private String name;
     private int cost;
     private Item item;
+    private boolean isLooted = false;
 
     public Chest(ArrayList<Item> itemTemplates) {
         Random random = new Random();
@@ -43,6 +44,27 @@ public class Chest {
         this.name = name;
         this.cost = cost;
         this.item = item;
+    }
+
+    public int getCost() {
+        return this.cost;
+    }
+
+    public boolean isLooted() {
+        return this.isLooted;
+    }
+
+    public Item openChest(int playerResourcefulness) {
+        if (cost > playerResourcefulness) {
+            // Player cannot afford to open
+            throw new IllegalStateException("Player current Resourcefulness is too low");
+        } else if (isLooted) {
+            // Cannot open something that is already opened
+            throw new IllegalStateException("Chest has already been opened");
+        }
+
+        this.isLooted = true;
+        return this.item;
     }
 
     private Item rollItem(
@@ -100,5 +122,9 @@ public class Chest {
         randomItemCopy.increaseRarity(winningRarity);
 
         return randomItemCopy;
+    }
+
+    public String toString() {
+        return String.format("%s (%d)", this.name, this.cost);
     }
 }

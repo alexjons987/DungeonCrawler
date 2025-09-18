@@ -29,12 +29,12 @@ public class DungeonCrawler {
         System.out.printf("Generated %s%n%n", this.dungeon.toString());
 
         // Game intro
-        System.out.println("You wake up. It being dark and unsure of your whereabouts, you scramble and quickly move on...");
+        System.out.println("You wake up in a dark place. Unsure of your whereabouts, you scramble and quickly move on...");
 
         // TODO: Remove and replace with an initial loot room sequence
         // Give three random [POOR] armor items
-        for (int i = 0; i < 3; i++)
-            this.player.addItemToInventory(this.dungeon.generateRandomDungeonArmor());
+        // for (int i = 0; i < 3; i++)
+        //     this.player.addItemToInventory(this.dungeon.generateRandomDungeonArmor());
 
         // Give player one random [POOR] weapon
         Weapon weapon = this.dungeon.generateRandomDungeonWeapon(Item.Rarity.POOR);
@@ -44,13 +44,13 @@ public class DungeonCrawler {
 
     private void mainGameLoop() {
         Scanner scanner = new Scanner(System.in);
-        int moduleCounter = 1;
-        preAdventureRest(scanner);
+        int moduleIndex = 0;
+        preAdventureRest(scanner, moduleIndex);
     }
 
     // TODO: Implement
-    private void preAdventureRest(Scanner scanner) {
-        DungeonCrawlerUI.playerMenu(scanner, this.player, this.dungeon);
+    private void preAdventureRest(Scanner scanner, int moduleCounter) {
+        DungeonCrawlerUI.postCombatMenu(scanner, this.player, this.dungeon.getModule(moduleCounter));
     }
 
     // TODO: Implement

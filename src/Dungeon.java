@@ -59,6 +59,14 @@ public class Dungeon {
         }
     }
 
+    public Module getModule(int i) {
+        return this.dungeonModules.get(i);
+    }
+
+    public ArrayList<Module> getModules() {
+        return this.dungeonModules;
+    }
+
     // TODO: Fix so func does not alter other lists other than returned list
     private ArrayList<Item> generateStandardItemSet() throws IOException {
 

@@ -19,4 +19,13 @@ public class Module {
     public ArrayList<Chest> getChests() {
         return this.chests;
     }
+
+    public ArrayList<Chest> getUnopenedChests() {
+        ArrayList<Chest> unopenedChests = new ArrayList<Chest>();
+        for (Chest chest : this.chests)
+            if (!chest.isLooted())
+                unopenedChests.add(chest);
+
+        return unopenedChests;
+    }
 }
