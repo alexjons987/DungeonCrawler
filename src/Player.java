@@ -217,13 +217,6 @@ public class Player {
 
     public void equipWeapon(Weapon weapon) {
 
-        if (this.equippedMainHand != null) {
-            this.inventory.add(this.equippedMainHand);
-        }
-        if (this.equippedOffHand != null) {
-            this.inventory.add(this.equippedOffHand);
-        }
-
         switch (weapon.getHandType()) {
             case Weapon.HandType.TWO_HANDED: // Unequip current MH + OH
                 if (this.equippedMainHand != null) {
