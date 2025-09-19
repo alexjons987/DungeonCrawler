@@ -8,7 +8,7 @@ Progress through the dungeon by looting, equipping and slaying monsters!
 ## Missing features
 The game is now runnable and somewhat playable, here is alist of missing features:
 * [ ] Update win condition - currently none
-* [ ] Make Strength affect damage dealt by player
+* [x] Make Strength affect damage dealt by player
 * [ ] Introduce Altars to post combat (give status effect for next combat encounter, Will cost)
 * [ ] Introduce Dodge, Miss and Crit to combat encounter
 * [ ] Add abilities

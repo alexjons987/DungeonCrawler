@@ -80,7 +80,6 @@ public class DungeonCrawler {
             int playerDamage = 0, mobDamage = 0;
             if (playerActionThisTick && player.isAlive()) {
                 playerDamage = (int) ((playerActiveWeapon.getBasePhysWeaponDmg() * player.getPhysDmgBonusMultiplier()) + (playerActiveWeapon.getBaseMagWeaponDmg() * player.getMagBonusMultiplier()));
-                System.out.println((playerActiveWeapon.getBasePhysWeaponDmg() * player.getPhysDmgBonusMultiplier()));
             }
             if (mobActionThisTick && mob.isAlive()) {
                 mobDamage = (int) ((float) mob.getDamage() * (1.0 - player.getPhysDmgReduction()));
