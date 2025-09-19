@@ -76,14 +76,14 @@ public class Dungeon {
 
         JSONArray weapons = new JSONObject(itemDataContent).getJSONArray("weapons");
         for (Object obj : weapons) {
-            JSONObject weapon = (JSONObject) obj;
+            JSONObject jsonWeapon = (JSONObject) obj;
 
-            String weaponName = weapon.getString("name");
+            String weaponName = jsonWeapon.getString("name");
             Item.Rarity weaponRarity = Item.Rarity.POOR; // Default rarity to POOR
-            Weapon.WeaponType weaponType = weapon.getEnum(Weapon.WeaponType.class, "weaponType");
-            Weapon.HandType weaponHandType = weapon.getEnum(Weapon.HandType.class, "handType");
-            int basePhysDmg = weapon.getInt("basePhysWeaponDmg");
-            int baseMagDmg = weapon.getInt("baseMagWeaponDmg");
+            Weapon.WeaponType weaponType = jsonWeapon.getEnum(Weapon.WeaponType.class, "weaponType");
+            Weapon.HandType weaponHandType = jsonWeapon.getEnum(Weapon.HandType.class, "handType");
+            int basePhysDmg = jsonWeapon.getInt("basePhysWeaponDmg");
+            int baseMagDmg = jsonWeapon.getInt("baseMagWeaponDmg");
 
             Weapon generatedWeapon = new Weapon(weaponName, weaponRarity, weaponType, weaponHandType,
                     basePhysDmg, baseMagDmg);
@@ -93,20 +93,20 @@ public class Dungeon {
 
         JSONArray armors = new JSONObject(itemDataContent).getJSONArray("armors");
         for (Object obj : armors) {
-            JSONObject armor = (JSONObject) obj;
+            JSONObject jsonArmor = (JSONObject) obj;
 
-            String armorName = armor.getString("name");
+            String armorName = jsonArmor.getString("name");
             Item.Rarity armorRarity = Item.Rarity.POOR; // Default rarity to POOR
-            Armor.ArmorType armorType = armor.getEnum(Armor.ArmorType.class, "armorType");
-            Armor.ArmorEquipRegion armorEquipRegion = armor.getEnum(Armor.ArmorEquipRegion.class, "armorEquipRegion");
-            int armorBaseDefense = armor.getInt("baseDefense");
-            int strength = armor.getInt("strength");
-            int vigor = armor.getInt("vigor");
-            int agility = armor.getInt("agility");
-            int dexterity = armor.getInt("dexterity");
-            int will = armor.getInt("will");
-            int knowledge = armor.getInt("knowledge");
-            int resourcefulness = armor.getInt("resourcefulness");
+            Armor.ArmorType armorType = jsonArmor.getEnum(Armor.ArmorType.class, "armorType");
+            Armor.ArmorEquipRegion armorEquipRegion = jsonArmor.getEnum(Armor.ArmorEquipRegion.class, "armorEquipRegion");
+            int armorBaseDefense = jsonArmor.getInt("baseDefense");
+            int strength = jsonArmor.getInt("strength");
+            int vigor = jsonArmor.getInt("vigor");
+            int agility = jsonArmor.getInt("agility");
+            int dexterity = jsonArmor.getInt("dexterity");
+            int will = jsonArmor.getInt("will");
+            int knowledge = jsonArmor.getInt("knowledge");
+            int resourcefulness = jsonArmor.getInt("resourcefulness");
 
             Armor generatedArmor = new Armor(armorName, armorRarity, armorType, armorEquipRegion,
                     armorBaseDefense, strength, vigor, agility, dexterity, will, knowledge, resourcefulness);

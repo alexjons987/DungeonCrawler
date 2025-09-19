@@ -7,20 +7,6 @@ public class DungeonCrawlerUI {
         System.out.println("Welcome to DungeonCrawler!");
     }
 
-    private static int readMenuChoice(Scanner sc, int min, int max) {
-        while (true) {
-            System.out.print("> ");
-            String userInput = sc.nextLine().trim();
-            try {
-                int choice = Integer.parseInt(userInput);
-                if (choice >= min && choice <= max)
-                    return choice;
-            } catch (NumberFormatException ignored) {
-            }
-            System.out.printf("Please enter a number between %d and %d.%n", min, max);
-        }
-    }
-
     public static Player selectClass(Scanner scanner) {
         System.out.println("\n- Select a class -");
         System.out.println("1. Fighter - All-around balanced class.");
@@ -39,14 +25,6 @@ public class DungeonCrawlerUI {
         };
     }
 
-    // TODO: Implement custom class builder
-    // Set all stats to 0, let user increase or decrease selected stat
-    // Total of 105 stat points to distribute
-    private static Player customClassBuilder(Scanner scanner) {
-        System.out.println("Custom classes not implemented yet!");
-        return new Player(15, 15, 15, 15, 15, 15, 15);
-    }
-
     public static Dungeon selectDungeon(Scanner scanner) {
         System.out.println("\n- Select a dungeon -");
         System.out.println("1. Ruins of the Forgotten Castle");
@@ -63,15 +41,6 @@ public class DungeonCrawlerUI {
         };
     }
 
-    // Module 1 always "rest/loot"
-    // 1. Go deeper into the dungeon
-    // 2. Examine yourself (Show stats)
-    // 3. Open your backpack (Show all items and their stats)
-    //      3a. Equip an item
-    //      3b. Close your backpack
-    // 4. Rest
-    //      4a. Light a campfire
-    //      4b. Pray
     public static void postCombatMenu(Scanner scanner, Player player, Module module) {
 
         AtomicInteger currResourcefulness = new AtomicInteger(player.getAttributes().getResourcefulness());
@@ -144,7 +113,7 @@ public class DungeonCrawlerUI {
         }
     }
 
-    // TODO: Implement abilities/perks, campfire/pray resting
+    // TODO: Implement pray to reset certain abilities (requires Ability and Perk classes)
     public static boolean playerRestChoice(Scanner scanner, Player player) {
         System.out.println("\n- Select action -");
         System.out.println("1. Light a campfire");
@@ -215,6 +184,28 @@ public class DungeonCrawlerUI {
                 System.out.println("There are no more unopened chests...");
                 return;
             }
+        }
+    }
+
+    // TODO: Implement custom class builder
+    // Set all stats to 1, let user increase or decrease selected stat
+    // Total of 98 stat points to distribute
+    private static Player customClassBuilder(Scanner scanner) {
+        System.out.println("Custom classes not implemented yet!");
+        return new Player(15, 15, 15, 15, 15, 15, 15);
+    }
+
+    private static int readMenuChoice(Scanner sc, int min, int max) {
+        while (true) {
+            System.out.print("> ");
+            String userInput = sc.nextLine().trim();
+            try {
+                int choice = Integer.parseInt(userInput);
+                if (choice >= min && choice <= max)
+                    return choice;
+            } catch (NumberFormatException ignored) {
+            }
+            System.out.printf("Please enter a number between %d and %d.%n", min, max);
         }
     }
 }

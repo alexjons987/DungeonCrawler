@@ -36,7 +36,6 @@ public class DungeonCrawler {
         Scanner scanner = new Scanner(System.in);
 
         int moduleIndex = 0;
-        // DungeonCrawlerUI.postCombatMenu(scanner, this.player, this.dungeon.getModule(moduleIndex));
 
         boolean playerStillAlive = true;
         while (playerStillAlive) {
