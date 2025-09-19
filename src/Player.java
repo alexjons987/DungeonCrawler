@@ -27,7 +27,7 @@ public class Player {
     // Constructors
     public Player(int strength, int vigor, int agility, int dexterity, int will, int knowledge, int resourcefulness) {
         this.attributes = new Attributes(strength, vigor, agility, dexterity, will, knowledge, resourcefulness);
-        this.health = this.attributes.getMaxHP();
+        this.health = this.attributes.calculateMaxHP();
         this.inventory = new ArrayList<>();
         this.equippedHead = null;
         this.equippedChest = null;
@@ -58,7 +58,7 @@ public class Player {
     }
 
     public float getHealthPercentage() {
-        return (float) this.health / this.attributes.getMaxHP();
+        return (float) this.health / this.attributes.calculateMaxHP();
     }
 
     public Weapon getEquippedMainHand() {
@@ -105,18 +105,22 @@ public class Player {
 
     public void heal(int amount) {
         this.health += amount;
-        if (this.health > this.attributes.getMaxHP()) {
-            this.health = this.attributes.getMaxHP();
+        if (this.health > this.attributes.calculateMaxHP()) {
+            this.health = this.attributes.calculateMaxHP();
         }
     }
 
-    public float getPlayerActionSpeedModifier() {
-        if (this.attributes.getActionSpeedPerc() >= 0)
-            return 1.0f - this.attributes.getActionSpeedPerc();
-        else
-            return 1.0f + this.attributes.getActionSpeedPerc();
+    public float getActionSpeedMultiplier() {
+        return 1.0f - this.attributes.calculateActionSpeedFrac();
     }
 
+    public float getPhysDmgBonusMultiplier() {
+        return 1.0f + this.attributes.calculatePhysicalDamageBonusFrac();
+    }
+
+    public float getMagBonusMultiplier() {
+        return 1.0f + this.attributes.calculateMagicDamageBonusFrac();
+    }
 
     public String getInventoryString() {
 
@@ -229,7 +233,7 @@ public class Player {
         this.attributes.setResourcefulness(this.attributes.getResourcefulness() + armorResourcefulness);
 
         // Update new health accordingly
-        float newCurrHealth = this.attributes.getMaxHP() * currHealthPerc;
+        float newCurrHealth = this.attributes.calculateMaxHP() * currHealthPerc;
         this.health = (int) newCurrHealth;
     }
 
@@ -255,7 +259,7 @@ public class Player {
         this.attributes.setResourcefulness(this.attributes.getResourcefulness() + armorResourcefulness);
 
         // Update new health accordingly
-        float newCurrHealth = this.attributes.getMaxHP() * currHealthPerc;
+        float newCurrHealth = this.attributes.calculateMaxHP() * currHealthPerc;
         this.health = (int) newCurrHealth;
     }
 
@@ -364,9 +368,9 @@ public class Player {
             this.attributes.getKnowledge(),
             this.attributes.getResourcefulness(),
             this.health,
-            this.attributes.getMaxHP(),
+            this.attributes.calculateMaxHP(),
             this.getHealthPercentage() * 100,
-            this.attributes.getActionSpeedPerc() * 100,
+            this.attributes.calculateActionSpeedFrac() * 100,
             this.getPhysDmgReduction() * 100
         );
     }

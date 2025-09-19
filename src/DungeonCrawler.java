@@ -79,7 +79,8 @@ public class DungeonCrawler {
             // Check attacks on current tick
             int playerDamage = 0, mobDamage = 0;
             if (playerActionThisTick && player.isAlive()) {
-                playerDamage = playerActiveWeapon.getBasePhysWeaponDmg() + playerActiveWeapon.getBaseMagWeaponDmg();
+                playerDamage = (int) ((playerActiveWeapon.getBasePhysWeaponDmg() * player.getPhysDmgBonusMultiplier()) + (playerActiveWeapon.getBaseMagWeaponDmg() * player.getMagBonusMultiplier()));
+                System.out.println((playerActiveWeapon.getBasePhysWeaponDmg() * player.getPhysDmgBonusMultiplier()));
             }
             if (mobActionThisTick && mob.isAlive()) {
                 mobDamage = (int) ((float) mob.getDamage() * (1.0 - player.getPhysDmgReduction()));
@@ -140,7 +141,7 @@ public class DungeonCrawler {
     }
 
     private int getEffectiveAttackTimer(Weapon weapon, Player player) {
-        return (int) ((float) weapon.getAttackTimer() * player.getPlayerActionSpeedModifier());
+        return (int) ((float) weapon.getAttackTimer() * player.getActionSpeedMultiplier());
     }
 
     private void postCombat(Scanner scanner, Player player, Module module, boolean printPostCombatText) {

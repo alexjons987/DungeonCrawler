@@ -120,7 +120,6 @@ public class Chest {
             default -> throw new IllegalStateException("Unexpected item: " + randomItem);
         };
         randomItemCopy.increaseRarity(winningRarity);
-        System.out.printf("Chose %s and generated %s%n", randomItem, randomItemCopy);
 
         return randomItemCopy;
     }

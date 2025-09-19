@@ -97,12 +97,22 @@ public class Attributes {
         return hmStats;
     }
 
-    public int getMaxHP() {
+    public int calculateMaxHP() {
         return (int) ((float) this.strength * 0.25f + (float) this.vigor * 0.75f) * 2 + 70;
     }
 
-    public float getActionSpeedPerc() {
+    public float calculateActionSpeedFrac() {
         float actionSpeed = (this.agility * 0.25f + this.dexterity * 0.75f) / 15.0f;
         return (float) (Math.pow(actionSpeed, 3) - 1.0f) / 100;
+    }
+
+    public float calculatePhysicalDamageBonusFrac() {
+        float physicalDamageBonus = this.strength / 15.0f;
+        return (float) (Math.pow(physicalDamageBonus, 2) - 1.0f) / 100;
+    }
+
+    public float calculateMagicDamageBonusFrac() {
+        float magicalDamageBonus = this.will / 15.0f;
+        return (float) (Math.pow(magicalDamageBonus, 2) - 1.0f) / 100;
     }
 }
