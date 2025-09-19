@@ -31,5 +31,4 @@ activate Dungeon
 DC <-- Dungeon : Returns Weapon object
 deactivate Dungeon
 DC -> Player : Equip generated Weapon object
-
 @enduml

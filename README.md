@@ -7,4 +7,4 @@ Every participant was asked to create a UML diagram and a sequence diagram.
 ### UML Diagram
 Not created yet.
 ### Sequence Diagram
-Not created yet.
+![Tux, the Linux mascot](/UML/initializegame.png)
