@@ -4,6 +4,10 @@ public class DungeonCrawler {
     private Player player;
     private Dungeon dungeon;
 
+    public DungeonCrawler() {
+
+    }
+
     public void startGame() {
         initGame();
         mainGameLoop();
