@@ -359,8 +359,8 @@ public class Player {
             "Resourcefulness: %d%n" +
             "Health: %d/%d (%.1f%%)%n" +
             "Action Speed: %.1f%%%n" +
-            "Phys. Dmg Reduction: %.2f%%",
-            "Damage Bonus: %.1f%% / %.1f%%%n" +
+            "Phys. Dmg Reduction: %.2f%%%n" +
+            "Damage Bonus: %.1f%% / %.1f%%%n",
             this.attributes.getStrength(),
             this.attributes.getVigor(),
             this.attributes.getAgility(),
