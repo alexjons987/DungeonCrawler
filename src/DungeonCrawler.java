@@ -57,7 +57,12 @@ public class DungeonCrawler {
         System.out.println("- Combat log -");
 
         boolean usingOffhand = false;
-        Weapon playerActiveWeapon = player.getEquippedMainHand();
+        Weapon playerActiveWeapon = null;
+        if (player.getEquippedMainHand() != null) {
+            playerActiveWeapon = player.getEquippedMainHand();
+        } else {
+            playerActiveWeapon = player.getEquippedOffHand();
+        }
         int playerWeaponAttackTimer = getEffectiveAttackTimer(playerActiveWeapon, player);
         int mobAttackTimer = mob.getAttackTimer();
 
