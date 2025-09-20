@@ -360,6 +360,7 @@ public class Player {
             "Health: %d/%d (%.1f%%)%n" +
             "Action Speed: %.1f%%%n" +
             "Phys. Dmg Reduction: %.2f%%",
+            "Damage Bonus: %.1f%% / %.1f%%%n" +
             this.attributes.getStrength(),
             this.attributes.getVigor(),
             this.attributes.getAgility(),
@@ -371,7 +372,9 @@ public class Player {
             this.attributes.calculateMaxHP(),
             this.getHealthPercentage() * 100,
             this.attributes.calculateActionSpeedFrac() * 100,
-            this.getPhysDmgReduction() * 100
+            this.getPhysDmgReduction() * 100,
+            this.attributes.calculatePhysicalDamageBonusFrac() * 100,
+            this.attributes.calculateMagicDamageBonusFrac() * 100
         );
     }
 
