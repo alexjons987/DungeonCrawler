@@ -16,19 +16,19 @@ activate Player
 DC <-- Player : Return Player object
 deactivate Player
 
-
 DC -> UI : Call to prompt user to select dungeon
 UI -> U : Prompt user to select dungeon
 U -> UI : User selects dungeon
 UI -> DC : Pass dungeon class choice
-DC -> Player : Create Dungeon based on user choice
-activate Player
-DC <-- Player : Return Dungeon object
-deactivate Player
+DC -> Dungeon : Create Dungeon based on user choice
+activate Dungeon
+DC <-- Dungeon : Return Dungeon object
+deactivate Dungeon
 
 DC -> Dungeon : Generate random Weapon
 activate Dungeon
-DC <-- Dungeon : Returns Weapon object
+DC <-- Dungeon : Return Weapon object
 deactivate Dungeon
+
 DC -> Player : Equip generated Weapon object
 @enduml
